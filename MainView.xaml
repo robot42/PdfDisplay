@@ -1,0 +1,122 @@
+﻿<Window x:Class="PdfDisplay.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:PdfDisplay"
+        AllowDrop="True"
+        DragEnter="OnDrag"
+        DragOver="OnDrag"
+        Drop="OnDrop"
+        Height="{local:SettingBinding Height}"
+        Width="{local:SettingBinding  Width}"
+        Left="{local:SettingBinding Left}"
+        Top="{local:SettingBinding Top}"
+        Title="{Binding ApplicationTitle}">
+    <Window.Resources>
+        <Storyboard x:Key="FirstStartToPdf">
+            <DoubleAnimation Storyboard.TargetName="FirstStartView" 
+                             Storyboard.TargetProperty="Opacity"
+                             From="1" To="0"
+                             Duration="0:0:0.2" />
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FirstStartView"
+                                           Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Collapsed}"/>
+            </ObjectAnimationUsingKeyFrames>
+            
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PdfView"
+                                           Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation Storyboard.TargetName="PdfView" 
+                             Storyboard.TargetProperty="Opacity"
+                             From="0" To="1"
+                             Duration="0:0:0.2" />
+        </Storyboard>
+
+        <Storyboard x:Key="PdfToFirstStart">
+            <DoubleAnimation Storyboard.TargetName="PdfView" 
+                             Storyboard.TargetProperty="Opacity"
+                             From="1" To="0"
+                             Duration="0:0:0.2" />
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PdfView"
+                                           Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Collapsed}"/>
+            </ObjectAnimationUsingKeyFrames>
+
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FirstStartView"
+                                           Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation Storyboard.TargetName="FirstStartView" 
+                             Storyboard.TargetProperty="Opacity"
+                             From="0" To="1"
+                             Duration="0:0:0.2" />
+        </Storyboard>
+
+        <Storyboard x:Key="PdfToHistoryStart">
+            <DoubleAnimation Storyboard.TargetName="PdfView" 
+                             Storyboard.TargetProperty="Opacity"
+                             From="1" To="0"
+                             Duration="0:0:0.2" />
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PdfView"
+                                           Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Collapsed}"/>
+            </ObjectAnimationUsingKeyFrames>
+
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HistoryStartView"
+                                           Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation Storyboard.TargetName="HistoryStartView" 
+                             Storyboard.TargetProperty="Opacity"
+                             From="0" To="1"
+                             Duration="0:0:0.2" />
+        </Storyboard>
+
+        <Storyboard x:Key="HistoryStartToPdf">
+            <DoubleAnimation Storyboard.TargetName="HistoryStartView" 
+                             Storyboard.TargetProperty="Opacity"
+                             From="1" To="0"
+                             Duration="0:0:0.2" />
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HistoryStartView"
+                                           Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Collapsed}"/>
+            </ObjectAnimationUsingKeyFrames>
+
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PdfView"
+                                           Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation Storyboard.TargetName="PdfView" 
+                             Storyboard.TargetProperty="Opacity"
+                             From="0" To="1"
+                             Duration="0:0:0.2" />
+        </Storyboard>
+
+        <Storyboard x:Key="ToFirstStart">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FirstStartView"
+                                           Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation Storyboard.TargetName="FirstStartView" 
+                             Storyboard.TargetProperty="Opacity"
+                             From="0" To="1"
+                             Duration="0:0:0.2" />
+        </Storyboard>
+        
+        <Storyboard x:Key="ToHistoryStart">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HistoryStartView"
+                                           Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation Storyboard.TargetName="HistoryStartView" 
+                             Storyboard.TargetProperty="Opacity"
+                             From="0" To="1"
+                             Duration="0:0:0.2" />
+        </Storyboard>
+    </Window.Resources>
+    <Grid>
+        <local:PdfView x:Name="PdfView" Opacity="0" Visibility="Collapsed"/>
+        <local:FirstStartView x:Name="FirstStartView" Opacity="0" Visibility="Collapsed"/>
+        <local:HistoryStartView x:Name="HistoryStartView" Opacity="0" Visibility="Collapsed"/>
+    </Grid>
+</Window>
