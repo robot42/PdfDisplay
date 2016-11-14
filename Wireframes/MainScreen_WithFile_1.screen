@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Window" id="1" x="24" y="16" width="657" height="697" text="PDF Display - MyFile.pdf - Page 4 of 23" measuredWidth="657" measuredHeight="697"/>
+  <widgets xsi:type="model:HScrollbar" id="6" x="104" y="696" width="563" measuredWidth="563" measuredHeight="17"/>
+  <widgets xsi:type="model:VScrollbar" id="7" x="664" y="35" height="662" measuredWidth="17" measuredHeight="662"/>
+  <widgets xsi:type="model:Panel" id="8" x="27" y="37" width="78" height="673" measuredWidth="78" measuredHeight="673" background="#f3f3f3" foreground="#f3f3f3"/>
+  <widgets xsi:type="model:Map" id="10" x="144" y="53" width="481" height="625" measuredWidth="481" measuredHeight="625"/>
+  <widgets xsi:type="model:Icon" id="19" x="48" y="59" measuredWidth="32" measuredHeight="32" foreground="#674ea7" icon="arrow-up (large)"/>
+  <widgets xsi:type="model:Icon" id="20" x="48" y="126" measuredWidth="32" measuredHeight="32" foreground="#674ea7" icon="arrow-down (large)"/>
+  <widgets xsi:type="model:Icon" id="21" x="48" y="198" measuredWidth="32" measuredHeight="32" foreground="#674ea7" icon="zoom-in (large)"/>
+  <widgets xsi:type="model:Icon" id="22" x="48" y="270" measuredWidth="32" measuredHeight="32" foreground="#674ea7" icon="zoom-out (large)"/>
+  <widgets xsi:type="model:Icon" id="23" x="48" y="657" measuredWidth="32" measuredHeight="32" foreground="#674ea7" icon="delete (large)" link="MainScreen_WithHistory.screen"/>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

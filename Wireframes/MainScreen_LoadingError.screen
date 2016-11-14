@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Window" id="1" x="24" y="16" width="657" height="697" text="PDF Display" measuredWidth="657" measuredHeight="697"/>
+  <widgets xsi:type="model:Button" id="2" x="168" y="328" width="169" height="49" text="Browse ..." measuredWidth="169" measuredHeight="49" link="MainScreen_WithFile_1.screen">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:TextArea" id="9" x="224" y="280" width="329" height="25" text="Try to load another file." measuredWidth="329" measuredHeight="25" borderColor="#ffffff">
+    <font size="12px"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="10" x="168" y="240" text="The file 'abdce.pdf' could not be loaded." measuredWidth="413" measuredHeight="48" textAlignment="Center" icon="sad (xlarge)">
+    <font size="20px"/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

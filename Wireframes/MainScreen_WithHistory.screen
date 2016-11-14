@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Window" id="1" x="24" y="16" width="657" height="697" text="PDF Display" measuredWidth="657" measuredHeight="697"/>
+  <widgets xsi:type="model:Button" id="2" x="80" y="458" width="209" height="49" text="Browse ..." measuredWidth="209" measuredHeight="49" background="#674ea7" link="MainScreen_WithFile_1.screen">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="4" x="80" y="418" text="You can also open another file." measuredWidth="280" measuredHeight="31">
+    <font size="20px"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="5" x="80" y="120" text="Select one of the files you opened previously." measuredWidth="410" measuredHeight="31">
+    <font size="20px"/>
+  </widgets>
+  <widgets xsi:type="model:Panel" id="9" x="78" y="203" width="537" height="45" measuredWidth="537" measuredHeight="45" background="#f3f3f3" border="none"/>
+  <widgets xsi:type="model:Label" id="8" x="104" y="215" text="    another file name that will wrap around.pdf                                                         >" measuredWidth="488" measuredHeight="24" textAlignment="Center" foreground="#351c75" icon="pdf (medium)">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Panel" id="10" x="78" y="252" width="537" height="45" measuredWidth="537" measuredHeight="45" background="#f3f3f3" foreground="#351c75" border="none"/>
+  <widgets xsi:type="model:Label" id="11" x="104" y="264" text="    FileNameToOpen.pdf                                                                                              >" measuredWidth="489" measuredHeight="24" textAlignment="Center" foreground="#351c75" icon="pdf (medium)">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Panel" id="12" x="78" y="156" width="537" height="45" measuredWidth="537" measuredHeight="45" background="#f3f3f3" border="none"/>
+  <widgets xsi:type="model:Label" id="13" x="104" y="168" text="    FileNameToOpen.pdf                                                                                              >" measuredWidth="489" measuredHeight="24" textAlignment="Center" foreground="#351c75" icon="pdf (medium)">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Panel" id="14" x="78" y="300" width="537" height="45" measuredWidth="537" measuredHeight="45" background="#f3f3f3" border="none"/>
+  <widgets xsi:type="model:Label" id="15" x="104" y="312" text="    another file name that will wrap around.pdf                                                         >" measuredWidth="488" measuredHeight="24" textAlignment="Center" foreground="#351c75" icon="pdf (medium)">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Panel" id="16" x="78" y="348" width="537" height="45" measuredWidth="537" measuredHeight="45" background="#f3f3f3" border="none"/>
+  <widgets xsi:type="model:Label" id="17" x="104" y="360" text="    FileNameToOpen.pdf                                                                                              >" measuredWidth="489" measuredHeight="24" textAlignment="Center" foreground="#351c75" icon="pdf (medium)">
+    <font/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>
