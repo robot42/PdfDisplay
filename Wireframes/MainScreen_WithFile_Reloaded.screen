@@ -12,7 +12,13 @@
     <widgets xsi:type="model:Icon" id="22" y="120" measuredWidth="32" measuredHeight="32" foreground="#674ea7" icon="zoom-out (large)"/>
   </widgets>
   <widgets xsi:type="model:Icon" id="23" x="34" y="45" measuredWidth="32" measuredHeight="32" foreground="#674ea7" icon="text-align-left (large)" link="MainScreen_WithHistory.screen"/>
-  <widgets xsi:type="model:Label" id="26" x="520" y="664" text="File changes on disk" measuredWidth="131" measuredHeight="23" foreground="#444444" icon="lightning (small)" link="MainScreen_WithFile_Reloaded.screen">
+  <widgets xsi:type="model:WidgetGroup" id="27" x="272" y="632" measuredWidth="177" measuredHeight="57">
+    <widgets xsi:type="model:Panel" id="26" width="177" height="57" measuredWidth="177" measuredHeight="57" background="#f3f3f3" foreground="#cccccc"/>
+    <widgets xsi:type="model:Label" id="25" x="16" y="16" text="  The file was reloaded." measuredWidth="150" measuredHeight="24" textAlignment="Center" icon="refresh (medium)">
+      <font/>
+    </widgets>
+  </widgets>
+  <widgets xsi:type="model:Label" id="28" x="456" y="666" width="193" text="Hint disapears after 3 seconds" measuredWidth="193" measuredHeight="23" foreground="#444444" icon="lightning (small)" link="MainScreen_WithFile_1.screen">
     <font bold="true"/>
   </widgets>
   <hRuler/>

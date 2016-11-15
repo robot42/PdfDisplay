@@ -3,7 +3,7 @@
   <panels id="nCxO5tvHnmLcbHNkrcFN-G0200E=" x="75" y="75">
     <screen href="MainScreen_NoHistory.screen#/"/>
   </panels>
-  <panels id="oWrKnSqlIF5HLbveIdPAuvb64nA=" x="375" y="75">
+  <panels id="oWrKnSqlIF5HLbveIdPAuvb64nA=" x="360" y="90">
     <screen href="MainScreen_WithFile_1.screen#/"/>
   </panels>
   <panels id="T6e7EdvRYriKeFOd1hsE28nIhLA=" x="675" y="75">
