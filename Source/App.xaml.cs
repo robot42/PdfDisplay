@@ -1,17 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 
 namespace PdfDisplay
 {
+    using System.Windows.Media;
+
+    using Telerik.Windows.Controls;
+
     /// <summary>
     /// Interaktionslogik für "App.xaml"
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            Windows8Palette.Palette.AccentColor = (Color)ColorConverter.ConvertFromString("#FF80397B");
+        }
     }
 }

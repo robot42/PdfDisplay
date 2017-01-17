@@ -1,17 +1,19 @@
-﻿using Caliburn.Micro;
-using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Windows.Threading;
-using System.Xml.Serialization;
-
-namespace PdfDisplay
+﻿namespace PdfDisplay
 {
     using System.ComponentModel;
     using System.Windows;
+
+    using Caliburn.Micro;
+
+    using Microsoft.Win32;
+
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.IO;
+    using System.Linq;
+    using System.Windows.Threading;
+    using System.Xml.Serialization;
 
     class MainViewModel : PropertyChangedBase
     {

@@ -1,14 +1,12 @@
-﻿using System.Windows;
-using System.Windows.Media.Animation;
-
-using Telerik.Windows.Controls;
-
-namespace PdfDisplay
+﻿namespace PdfDisplay
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
+    using System.Windows;
+    using System.Windows.Media.Animation;
+
+    using Telerik.Windows.Controls;
 
     /// <summary>
     ///     Interaktionslogik für MainWindow.xaml
@@ -65,7 +63,7 @@ namespace PdfDisplay
                     }
 
                     this.lastFileName = this.vm.CurrentPdfFile.FullName;
-                    
+
                     string storyboardName;
 
                     if (!string.IsNullOrEmpty(this.vm.CurrentPdfFile.FullName))
@@ -97,7 +95,7 @@ namespace PdfDisplay
         {
             var pdf = AllPdfFilesToBeDroped(e.Data).FirstOrDefault();
 
-            this.vm.OpenFile(pdf);  
+            this.vm.OpenFile(pdf);
         }
 
         private static IEnumerable<string> AllPdfFilesToBeDroped(IDataObject data)

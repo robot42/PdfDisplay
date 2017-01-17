@@ -1,6 +1,7 @@
 ﻿namespace PdfDisplay
 {
     using System.Windows;
+
     using Telerik.Windows.Documents.Fixed;
 
     /// <summary>
@@ -10,68 +11,79 @@
     {
         public PdfView()
         {
-            InitializeComponent();
-            Loaded += this.OnLoaded;
-        }
-
-        void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            if (ViewModel == null)
-            {
-                return;
-            }
-
-            ViewModel.PropertyChanged += this.OnViewModelPropertyChanged;
-            this.pdfViewer.DocumentSource = ViewModel.CurrentPdfFile.GetDocumentSource();
-        }
-
-        void OnViewModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "CurrentPdfFile")
-            {
-                this.pdfViewer.DocumentSource = ViewModel.CurrentPdfFile.GetDocumentSource(); 
-            }
+            this.InitializeComponent();
+            this.Loaded += this.OnLoaded;
         }
 
         private MainViewModel ViewModel
         {
             get
             {
-                return DataContext as MainViewModel;
+                return this.DataContext as MainViewModel;
+            }
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            if (this.ViewModel == null)
+            {
+                return;
+            }
+
+            this.ViewModel.PropertyChanged += this.OnViewModelPropertyChanged;
+            this.pdfViewer.DocumentSource = this.ViewModel.CurrentPdfFile.GetDocumentSource();
+        }
+
+        private void OnViewModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "CurrentPdfFile")
+            {
+                this.pdfViewer.DocumentSource = this.ViewModel.CurrentPdfFile.GetDocumentSource();
             }
         }
 
         private void OnFileSelection(object sender, RoutedEventArgs e)
         {
-            ViewModel.CurrentPdfFile = FileViewModel.Default;
-            ViewModel.SelectedRescentFile = null;
-            this.pdfViewer.DocumentSource = ViewModel.CurrentPdfFile.GetDocumentSource();
+            this.ViewModel.CurrentPdfFile = FileViewModel.Default;
+            this.ViewModel.SelectedRescentFile = null;
+            this.pdfViewer.DocumentSource = this.ViewModel.CurrentPdfFile.GetDocumentSource();
         }
 
         private void OnZoomOut(object sender, RoutedEventArgs e)
         {
-            if (pdfViewer.ScaleFactor > 0.3)
+            if (this.pdfViewer.ScaleFactor > 0.3)
             {
-                pdfViewer.ScaleFactor -= 0.2;
+                this.pdfViewer.ScaleFactor -= 0.2;
             }
         }
 
         private void OnZoomIn(object sender, RoutedEventArgs e)
         {
-            if (pdfViewer.ScaleFactor < 5)
+            if (this.pdfViewer.ScaleFactor < 5)
             {
-                pdfViewer.ScaleFactor += 0.2;
+                this.pdfViewer.ScaleFactor += 0.2;
             }
         }
 
         private void OnPageDown(object sender, RoutedEventArgs e)
         {
-            pdfViewer.PageDown();
+            try
+            {
+                this.pdfViewer.PageDown();
+            }
+            finally
+            {
+            }
         }
 
         private void OnPageUp(object sender, RoutedEventArgs e)
         {
-            pdfViewer.PageUp();
+            if (this.ViewModel.CurrentPdfFile.CurrentPage <= 1)
+            {
+                return;
+            }
+
+            this.pdfViewer.PageUp();
         }
 
         private void OnDocumentChanged(object sender, System.EventArgs e)
@@ -79,35 +91,35 @@
             try
             {
                 // pdfViewer.ScaleFactor = ViewModel.CurrentPdfFile.ScaleFactor;
-                pdfViewer.CurrentPageNumber = ViewModel.CurrentPdfFile.CurrentPage;
+                this.pdfViewer.CurrentPageNumber = this.ViewModel.CurrentPdfFile.CurrentPage;
             }
             catch
             {
             }
             finally
             {
-                ViewModel.CurrentPdfFile.IsLoading = false;
+                this.ViewModel.CurrentPdfFile.IsLoading = false;
             }
         }
 
         private void OnCurrentDocumentPageChanged(object sender, CurrentPageChangedEventArgs e)
         {
-            if (ViewModel.CurrentPdfFile.IsLoading)
+            if (this.ViewModel.CurrentPdfFile.IsLoading)
             {
                 return;
             }
 
-            ViewModel.CurrentPdfFile.CurrentPage = pdfViewer.CurrentPageNumber;
+            this.ViewModel.CurrentPdfFile.CurrentPage = this.pdfViewer.CurrentPageNumber;
         }
 
         private void OnCurrentDocumentScaleFactorChanged(object sender, System.EventArgs e)
         {
-            if (ViewModel.CurrentPdfFile.IsLoading)
+            if (this.ViewModel.CurrentPdfFile.IsLoading)
             {
                 return;
             }
 
-            ViewModel.CurrentPdfFile.ScaleFactor = pdfViewer.ScaleFactor;
+            this.ViewModel.CurrentPdfFile.ScaleFactor = this.pdfViewer.ScaleFactor;
         }
     }
 }
