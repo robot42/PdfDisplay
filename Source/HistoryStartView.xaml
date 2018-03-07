@@ -22,7 +22,8 @@
             <telerik:RadListBox ItemsSource="{Binding RescentFiles, Mode=OneWay}"
                                 SelectedItem="{Binding SelectedRescentFile, Mode=TwoWay}"
                                 BorderThickness="0"
-                                MouseLeftButtonUp="OnSelectRescentFile">
+                                MouseLeftButtonUp="OnSelectRescentFile"
+                                Margin="-16,0,0,0">
                 <telerik:RadListBox.ItemContainerStyle>
                     <Style TargetType="{x:Type telerik:RadListBoxItem}">
                         <Setter Property="LayoutTransform">
