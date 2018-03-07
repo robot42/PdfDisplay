@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="PdfDisplay.FirstStartView"
+﻿<UserControl x:Class="PdfDisplay.WelcomeView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -15,7 +15,7 @@
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Row="1">
             <TextBlock FontSize="20" Foreground="#FF7B7B7B" Text="Browse for a PDF file that you want to see."/>
             <Rectangle Height="10"/>
-            <telerik:RadButton Click="RadButton_Click" Content="Browse ..." Width="150" Height="32"
+            <telerik:RadButton x:Name="OpenDocument" Content="Browse ..." Width="150" Height="32"
                                HorizontalAlignment="Left" Background="#FF80397B"  Foreground="#FFF7F7F7"/>
         </StackPanel>    
     </Grid>

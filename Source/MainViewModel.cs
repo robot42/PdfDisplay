@@ -1,78 +1,90 @@
-﻿namespace PdfDisplay
+﻿// <copyright>
+//     Copyright (c) AIS Automation Dresden GmbH. All rights reserved.
+// </copyright>
+
+namespace PdfDisplay
 {
-    using System.ComponentModel;
-    using System.Windows;
-
-    using Caliburn.Micro;
-
-    using Microsoft.Win32;
-
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.ComponentModel;
     using System.IO;
     using System.Linq;
+    using System.Runtime.CompilerServices;
+    using System.Threading.Tasks;
+    using System.Windows;
     using System.Windows.Threading;
     using System.Xml.Serialization;
+    using Caliburn.Micro;
+    using Microsoft.Win32;
 
-    class MainViewModel : PropertyChangedBase
+    public class MainViewModel : Conductor<Screen>.Collection.OneActive, IHandleWithTask<OpenDocumentMessage>, IHandleWithTask<CloseDocumentMessage>
     {
+        private readonly IEventAggregator eventAggregator;
+
         private readonly FileSystemWatcher watcher = new FileSystemWatcher();
 
         private readonly List<RescentFileModel> rescentFiles = new List<RescentFileModel>();
 
-        private readonly List<FileModel> fileModels = new List<FileModel>(); 
+        private readonly List<FileModel> fileModels = new List<FileModel>();
+
+        private readonly DispatcherTimer reloadTimer = new DispatcherTimer();
 
         private RescentFileViewModel selectedRescentFile;
 
         private FileViewModel currentPdfFile = FileViewModel.Default;
 
-        private readonly DispatcherTimer reloadTimer = new DispatcherTimer();
+        private WelcomeViewModel welcomeViewModel;
+        private DocumentViewModel documentViewModel;
 
-        public MainViewModel()
+        public MainViewModel(IEventAggregator eventAggregator)
         {
+            this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
 
-            watcher.NotifyFilter = NotifyFilters.LastWrite;
-            watcher.Changed += (s, e) => { reloadTimer.Stop(); reloadTimer.Start(); };
+            this.watcher.NotifyFilter = NotifyFilters.LastWrite;
+            this.watcher.Changed += (s, e) =>
+            {
+                this.reloadTimer.Stop();
+                this.reloadTimer.Start();
+            };
 
             reloadTimer.Interval = TimeSpan.FromSeconds(1);
             reloadTimer.Tick += (s, e) =>
             {
                 reloadTimer.Stop();
-                if (CurrentPdfFile != FileViewModel.Default) 
-                {
-                    FileStream stream = null;
+                //if (CurrentPdfFile == FileViewModel.Default)
+                //{
+                //    return;
+                //}
 
-                    try
-                    {
-                        stream = (new FileInfo(CurrentPdfFile.FullName)).Open(FileMode.Open, FileAccess.Read, FileShare.None);
-                    }
-                    catch (IOException)
-                    {
-                        //the file is unavailable because it is:
-                        //still being written to
-                        //or being processed by another thread
-                        //or does not exist (has already been processed)
-                        return;
-                    }
-                    finally
-                    {
-                        if (stream != null)
-                        {
-                            stream.Close();
-                        }
-                    }
+                //FileStream stream = null;
 
-                    System.Action a = () =>
-                    {
-                        CurrentPdfFile.IsLoading = true;
-                        NotifyOfPropertyChange(() => CurrentPdfFile);
-                    };
+                //try
+                //{
+                //    stream = (new FileInfo(CurrentPdfFile.FullName)).Open(FileMode.Open, FileAccess.Read, FileShare.None);
+                //}
+                //catch (IOException)
+                //{
+                //    //the file is unavailable because it is:
+                //    //still being written to
+                //    //or being processed by another thread
+                //    //or does not exist (has already been processed)
+                //    return;
+                //}
+                //finally
+                //{
+                //    stream?.Close();
+                //}
 
-                    Application.Current.Dispatcher.BeginInvoke(a);
-                }
+                //System.Action a = () =>
+                //{
+                //    CurrentPdfFile.IsLoading = true;
+                //    NotifyOfPropertyChange(() => CurrentPdfFile);
+                //};
+
+                // Application.Current.Dispatcher.BeginInvoke(a);
             };
-            
+
             try
             {
                 var homePath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
@@ -80,30 +92,85 @@
                 using (var file = new StreamReader(Path.Combine(homePath, "PdfDisplayRescentFiles.xml")))
                 {
                     var serializer = new XmlSerializer(typeof(List<RescentFileModel>));
-                    rescentFiles = (List<RescentFileModel>)serializer.Deserialize(file);
+                    this.rescentFiles = (List<RescentFileModel>)serializer.Deserialize(file);
                 }
 
                 using (var file = new StreamReader(Path.Combine(homePath, "PdfDisplayRescentFileProperties.xml")))
                 {
                     var serializer = new XmlSerializer(typeof(List<FileModel>));
-                    fileModels = (List<FileModel>)serializer.Deserialize(file);
+                    this.fileModels = (List<FileModel>)serializer.Deserialize(file);
                 }
             }
             catch
             {
             }
+
+            this.welcomeViewModel = new WelcomeViewModel(this.eventAggregator);
+            this.documentViewModel = new DocumentViewModel(this.eventAggregator);
+
+            this.Items.Add(this.welcomeViewModel);
+            this.Items.Add(this.documentViewModel);
+
+            this.eventAggregator.Subscribe(this);
         }
+
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+            this.ActivateItem(this.welcomeViewModel);
+        }
+
+        public ObservableCollection<RescentFileViewModel> RescentFiles
+        {
+            get
+            {
+                var result = new ObservableCollection<RescentFileViewModel>();
+
+                foreach (var item in this.rescentFiles)
+                {
+                    result.Add(new RescentFileViewModel(item));
+                }
+
+                return result;
+            }
+        }
+
+        public RescentFileViewModel SelectedRescentFile
+        {
+            get => selectedRescentFile;
+
+            set
+            {
+                selectedRescentFile = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+        public string ApplicationTitle
+        {
+            get
+            {
+                if (this.documentViewModel == null || this.documentViewModel.CurrentPdfFile != FileViewModel.Default)
+                {
+                    return "PDF Display";
+                }
+
+                return
+                    $"PDF Display - {this.documentViewModel.CurrentPdfFile.Name} - Page {this.documentViewModel.CurrentPdfFile.CurrentPage}";
+            }
+        }
+
 
         public void Browse()
         {
             var dialog = new OpenFileDialog
-                             {
-                                 DefaultExt = ".pdf",
-                                 Filter = "PDF documents |*.pdf",
-                                 RestoreDirectory = true,
-                                 CheckFileExists = true,
-                                 CheckPathExists = true
-                             };
+            {
+                DefaultExt = ".pdf",
+                Filter = "PDF documents |*.pdf",
+                RestoreDirectory = true,
+                CheckFileExists = true,
+                CheckPathExists = true
+            };
 
             var result = dialog.ShowDialog();
 
@@ -118,25 +185,24 @@
             if (!filePath.ToLower().EndsWith(".pdf") || !File.Exists(filePath))
             {
                 MessageBox.Show(
-                    string.Format("The file {0} is not valid or does not exist.", filePath),
-                    "Sorry ...",
+                    $"The file {filePath} is not valid or does not exist.",
+                    "Sorry...",
                     MessageBoxButton.OK);
 
-                // remove the file from the rescent file list if necessary
-                RescentFileModel invalidRescentFile;
-
-                if (TryGetRescentFile(filePath, out invalidRescentFile))
+                // remove the file from the recent file list if necessary
+                if (TryGetRescentFile(filePath, out RescentFileModel invalidRescentFile) == false)
                 {
-                    rescentFiles.Remove(invalidRescentFile);
-                    NotifyOfPropertyChange(() => RescentFiles);
+                    return;
                 }
 
+                rescentFiles.Remove(invalidRescentFile);
+                NotifyOfPropertyChange(nameof(RescentFiles));
                 return;
             }
 
             RescentFileModel rescentFile;
 
-            if (!TryGetRescentFile(filePath, out rescentFile))
+            if (TryGetRescentFile(filePath, out rescentFile) == false)
             {
                 rescentFile = new RescentFileModel { FullName = filePath };
                 rescentFiles.Insert(0, rescentFile);
@@ -145,13 +211,12 @@
                     rescentFiles.RemoveAt(rescentFiles.Count - 1);
                 }
 
-                NotifyOfPropertyChange(() => RescentFiles);
+                NotifyOfPropertyChange(nameof(RescentFiles));
             }
             else
             {
                 MoveRescentFileToTop(rescentFile);
             }
-            
 
             var fileModel = fileModels.FirstOrDefault(x => x.FullName == filePath);
 
@@ -161,122 +226,14 @@
                 fileModels.Add(fileModel);
             }
 
-            CurrentPdfFile = new FileViewModel(fileModel) { IsLoading = true };
+            // CurrentPdfFile = new FileViewModel(fileModel) { IsLoading = true };
 
-            watcher.EnableRaisingEvents = false;
-            watcher.Path = CurrentPdfFile.Path;
-            watcher.Filter = CurrentPdfFile.Name;
-            watcher.EnableRaisingEvents = true;
-        }
+            // watcher.EnableRaisingEvents = false;
+            // watcher.Path = CurrentPdfFile.Path;
+            // watcher.Filter = CurrentPdfFile.Name;
+            // watcher.EnableRaisingEvents = true;
 
-        private void MoveRescentFileToTop(RescentFileModel rescentFile)
-        {
-            if (rescentFile == null)
-            {
-                return;
-            }
-
-            if (this.rescentFiles.IndexOf(rescentFile) <= 0)
-            {
-                return;
-            }
-
-            this.rescentFiles.Remove(rescentFile);
-            this.rescentFiles.Insert(0, rescentFile);
-            NotifyOfPropertyChange(() => RescentFiles);
-        }
-
-        private bool TryGetRescentFile(string filePath, out RescentFileModel rescentFile)
-        {
-            foreach (var file in rescentFiles)
-            {
-                if (file.FullName == filePath)
-                {
-                    rescentFile = file;
-                    return true;
-                }
-            }
-
-            rescentFile = null;
-            return false;
-        }
-
-        public ObservableCollection<RescentFileViewModel> RescentFiles
-        {
-            get
-            {
-                var result = new ObservableCollection<RescentFileViewModel>();
-
-                foreach (var item in rescentFiles)
-                {
-                    result.Add(new RescentFileViewModel(item));
-                }
-
-                return result;
-            }
-        }
-
-        public RescentFileViewModel SelectedRescentFile
-        {
-            get
-            {
-                return selectedRescentFile;
-            }
-
-            set
-            {
-                selectedRescentFile = value;
-                NotifyOfPropertyChange();
-            }
-        }
-
-        public FileViewModel CurrentPdfFile
-        {
-            get
-            {
-                return currentPdfFile;
-            }
-
-            set
-            {
-                if (value == null)
-                {
-                    return;
-                }
-
-                if (currentPdfFile != null)
-                {
-                    currentPdfFile.PropertyChanged -= this.OnPdfFilePropertyChanged;
-                }
-                currentPdfFile = value;
-                if (currentPdfFile != null)
-                {
-                    currentPdfFile.PropertyChanged += this.OnPdfFilePropertyChanged;
-                }
-                NotifyOfPropertyChange();
-                NotifyOfPropertyChange(() => ApplicationTitle);
-            }
-        }
-
-        private void OnPdfFilePropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName != "CurrentPage")
-            {
-                return;
-            }
-
-            NotifyOfPropertyChange(() => ApplicationTitle);
-        }
-
-        public string ApplicationTitle
-        {
-            get
-            {
-                return
-                    this.CurrentPdfFile != FileViewModel.Default
-                    ? string.Format("PDF Display - {0} - Page {1}", this.CurrentPdfFile.Name, this.CurrentPdfFile.CurrentPage)
-                    : "PDF Display";
-            }
+            this.ActivateItem(this.documentViewModel);
         }
 
         internal void Save()
@@ -302,6 +259,64 @@
             catch
             {
             }
+        }
+
+        private void MoveRescentFileToTop(RescentFileModel rescentFile)
+        {
+            if (rescentFile == null)
+            {
+                return;
+            }
+
+            if (this.rescentFiles.IndexOf(rescentFile) <= 0)
+            {
+                return;
+            }
+
+            this.rescentFiles.Remove(rescentFile);
+            this.rescentFiles.Insert(0, rescentFile);
+            NotifyOfPropertyChange(nameof(RescentFiles));
+        }
+
+        private bool TryGetRescentFile(string filePath, out RescentFileModel rescentFile)
+        {
+            foreach (var file in rescentFiles)
+            {
+                if (file.FullName == filePath)
+                {
+                    rescentFile = file;
+                    return true;
+                }
+            }
+
+            rescentFile = null;
+            return false;
+        }
+
+        private void OnPdfFilePropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != "CurrentPage")
+            {
+                return;
+            }
+
+            NotifyOfPropertyChange(nameof(ApplicationTitle));
+        }
+
+        public Task Handle(OpenDocumentMessage message)
+        {
+            return Task.Run(() => this.OpenFile(message.FileName));
+        }
+
+        public Task Handle(CloseDocumentMessage message)
+        {
+            return Task.Run(
+                () =>
+                {
+                    this.documentViewModel.CurrentPdfFile = FileViewModel.Default;
+                    this.ActivateItem(this.welcomeViewModel);
+                }
+            );
         }
     }
 }

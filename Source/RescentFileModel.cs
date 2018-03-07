@@ -20,11 +20,11 @@
             this.model = model;
         }
 
-        public string FullName { get { return model.FullName; } }
+        public string FullName => model.FullName;
 
-        public string Name { get { return System.IO.Path.GetFileName(model.FullName); } }
+        public string Name => System.IO.Path.GetFileName(model.FullName);
 
-        public string Path { get { return System.IO.Path.GetDirectoryName(model.FullName); } }
+        public string Path => System.IO.Path.GetDirectoryName(model.FullName);
     }
 
     public class FileModel

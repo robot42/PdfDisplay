@@ -1,4 +1,5 @@
 ﻿using System.Windows.Data;
+using PdfDisplay.Properties;
 
 namespace PdfDisplay
 {
@@ -17,8 +18,8 @@ namespace PdfDisplay
 
         private void Initialize()
         {
-            this.Source = Properties.Settings.Default;
-            this.Mode = BindingMode.TwoWay;
+            Source = Settings.Default;
+            Mode = BindingMode.TwoWay;
         }
     }
 }

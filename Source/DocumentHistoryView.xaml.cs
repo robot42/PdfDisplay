@@ -8,11 +8,11 @@ namespace PdfDisplay
     using System.Windows.Media;
 
     /// <summary>
-    /// Interaktionslogik für HistoryStartView.xaml
+    /// Interaktionslogik für DocumentHistoryView.xaml
     /// </summary>
-    public partial class HistoryStartView
+    public partial class DocumentHistoryView
     {
-        public HistoryStartView()
+        public DocumentHistoryView()
         {
             InitializeComponent();
         }

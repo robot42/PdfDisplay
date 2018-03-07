@@ -13,7 +13,7 @@
         Title="{Binding ApplicationTitle}">
     <Window.Resources>
         <Storyboard x:Key="FirstStartToPdf">
-            <DoubleAnimation Storyboard.TargetName="FirstStartView" 
+            <!--<DoubleAnimation Storyboard.TargetName="FirstStartView" 
                              Storyboard.TargetProperty="Opacity"
                              From="1" To="0"
                              Duration="0:0:0.2" />
@@ -29,11 +29,11 @@
             <DoubleAnimation Storyboard.TargetName="PdfView" 
                              Storyboard.TargetProperty="Opacity"
                              From="0" To="1"
-                             Duration="0:0:0.2" />
+                             Duration="0:0:0.2" />-->
         </Storyboard>
 
         <Storyboard x:Key="PdfToFirstStart">
-            <DoubleAnimation Storyboard.TargetName="PdfView" 
+            <!--<DoubleAnimation Storyboard.TargetName="PdfView" 
                              Storyboard.TargetProperty="Opacity"
                              From="1" To="0"
                              Duration="0:0:0.2" />
@@ -49,11 +49,11 @@
             <DoubleAnimation Storyboard.TargetName="FirstStartView" 
                              Storyboard.TargetProperty="Opacity"
                              From="0" To="1"
-                             Duration="0:0:0.2" />
+                             Duration="0:0:0.2" />-->
         </Storyboard>
 
         <Storyboard x:Key="PdfToHistoryStart">
-            <DoubleAnimation Storyboard.TargetName="PdfView" 
+            <!--<DoubleAnimation Storyboard.TargetName="PdfView" 
                              Storyboard.TargetProperty="Opacity"
                              From="1" To="0"
                              Duration="0:0:0.2" />
@@ -69,11 +69,11 @@
             <DoubleAnimation Storyboard.TargetName="HistoryStartView" 
                              Storyboard.TargetProperty="Opacity"
                              From="0" To="1"
-                             Duration="0:0:0.2" />
+                             Duration="0:0:0.2" />-->
         </Storyboard>
 
         <Storyboard x:Key="HistoryStartToPdf">
-            <DoubleAnimation Storyboard.TargetName="HistoryStartView" 
+            <!--<DoubleAnimation Storyboard.TargetName="HistoryStartView" 
                              Storyboard.TargetProperty="Opacity"
                              From="1" To="0"
                              Duration="0:0:0.2" />
@@ -89,34 +89,30 @@
             <DoubleAnimation Storyboard.TargetName="PdfView" 
                              Storyboard.TargetProperty="Opacity"
                              From="0" To="1"
-                             Duration="0:0:0.2" />
+                             Duration="0:0:0.2" />-->
         </Storyboard>
 
         <Storyboard x:Key="ToFirstStart">
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FirstStartView"
+            <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="FirstStartView"
                                            Storyboard.TargetProperty="Visibility">
                 <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}"/>
             </ObjectAnimationUsingKeyFrames>
             <DoubleAnimation Storyboard.TargetName="FirstStartView" 
                              Storyboard.TargetProperty="Opacity"
                              From="0" To="1"
-                             Duration="0:0:0.2" />
+                             Duration="0:0:0.2" />-->
         </Storyboard>
         
         <Storyboard x:Key="ToHistoryStart">
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HistoryStartView"
+            <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="HistoryStartView"
                                            Storyboard.TargetProperty="Visibility">
                 <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}"/>
             </ObjectAnimationUsingKeyFrames>
             <DoubleAnimation Storyboard.TargetName="HistoryStartView" 
                              Storyboard.TargetProperty="Opacity"
                              From="0" To="1"
-                             Duration="0:0:0.2" />
+                             Duration="0:0:0.2" />-->
         </Storyboard>
     </Window.Resources>
-    <Grid>
-        <local:PdfView x:Name="PdfView" Opacity="0" Visibility="Collapsed"/>
-        <local:FirstStartView x:Name="FirstStartView" Opacity="0" Visibility="Collapsed"/>
-        <local:HistoryStartView x:Name="HistoryStartView" Opacity="0" Visibility="Collapsed"/>
-    </Grid>
+    <ContentControl x:Name="ActiveItem" />
 </Window>

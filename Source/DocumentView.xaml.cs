@@ -5,21 +5,21 @@
     using Telerik.Windows.Documents.Fixed;
 
     /// <summary>
-    ///     Interaktionslogik für PdfView.xaml
+    ///     Interaktionslogik für DocumentView.xaml
     /// </summary>
-    public partial class PdfView
+    public partial class DocumentView
     {
-        public PdfView()
+        public DocumentView()
         {
             this.InitializeComponent();
             this.Loaded += this.OnLoaded;
         }
 
-        private MainViewModel ViewModel
+        private DocumentViewModel ViewModel
         {
             get
             {
-                return this.DataContext as MainViewModel;
+                return this.DataContext as DocumentViewModel;
             }
         }
 
@@ -31,7 +31,7 @@
             }
 
             this.ViewModel.PropertyChanged += this.OnViewModelPropertyChanged;
-            this.pdfViewer.DocumentSource = this.ViewModel.CurrentPdfFile.GetDocumentSource();
+            this.pdfViewer.DocumentSource = this.ViewModel.CurrentPdfFile?.GetDocumentSource();
         }
 
         private void OnViewModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -45,7 +45,7 @@
         private void OnFileSelection(object sender, RoutedEventArgs e)
         {
             this.ViewModel.CurrentPdfFile = FileViewModel.Default;
-            this.ViewModel.SelectedRescentFile = null;
+            // this.ViewModel.SelectedRescentFile = null;
             this.pdfViewer.DocumentSource = this.ViewModel.CurrentPdfFile.GetDocumentSource();
         }
 
@@ -104,12 +104,12 @@
 
         private void OnCurrentDocumentPageChanged(object sender, CurrentPageChangedEventArgs e)
         {
-            if (this.ViewModel.CurrentPdfFile.IsLoading)
-            {
-                return;
-            }
+            //if (this.ViewModel.CurrentPdfFile.IsLoading)
+            //{
+            //    return;
+            //}
 
-            this.ViewModel.CurrentPdfFile.CurrentPage = this.pdfViewer.CurrentPageNumber;
+            //this.ViewModel.CurrentPdfFile.CurrentPage = this.pdfViewer.CurrentPageNumber;
         }
 
         private void OnCurrentDocumentScaleFactorChanged(object sender, System.EventArgs e)
