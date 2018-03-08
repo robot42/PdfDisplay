@@ -10,13 +10,13 @@ namespace PdfDisplay
     using System.ComponentModel;
     using System.IO;
     using System.Linq;
-    using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Threading;
     using System.Xml.Serialization;
     using Caliburn.Micro;
     using Microsoft.Win32;
+    using PdfDisplay.Communication;
 
     public class MainViewModel : Conductor<Screen>.Collection.OneActive, IHandleWithTask<OpenDocumentMessage>, IHandleWithTask<CloseDocumentMessage>
     {
@@ -26,13 +26,13 @@ namespace PdfDisplay
 
         private readonly List<RescentFileModel> rescentFiles = new List<RescentFileModel>();
 
-        private readonly List<FileModel> fileModels = new List<FileModel>();
+        private readonly List<DocumentModel> fileModels = new List<DocumentModel>();
 
         private readonly DispatcherTimer reloadTimer = new DispatcherTimer();
 
         private RescentFileViewModel selectedRescentFile;
 
-        private FileViewModel currentPdfFile = FileViewModel.Default;
+        private DocumentModel currentPdfFile = DocumentModel.Default;
 
         private WelcomeViewModel welcomeViewModel;
         private DocumentViewModel documentViewModel;
@@ -52,7 +52,7 @@ namespace PdfDisplay
             reloadTimer.Tick += (s, e) =>
             {
                 reloadTimer.Stop();
-                //if (CurrentPdfFile == FileViewModel.Default)
+                //if (CurrentPdfFile == DocumentModel.Default)
                 //{
                 //    return;
                 //}
@@ -97,8 +97,8 @@ namespace PdfDisplay
 
                 using (var file = new StreamReader(Path.Combine(homePath, "PdfDisplayRescentFileProperties.xml")))
                 {
-                    var serializer = new XmlSerializer(typeof(List<FileModel>));
-                    this.fileModels = (List<FileModel>)serializer.Deserialize(file);
+                    var serializer = new XmlSerializer(typeof(List<DocumentModel>));
+                    this.fileModels = (List<DocumentModel>)serializer.Deserialize(file);
                 }
             }
             catch
@@ -150,13 +150,13 @@ namespace PdfDisplay
         {
             get
             {
-                if (this.documentViewModel == null || this.documentViewModel.CurrentPdfFile != FileViewModel.Default)
+                if (this.documentViewModel == null || this.documentViewModel.Model != DocumentModel.Default)
                 {
                     return "PDF Display";
                 }
 
                 return
-                    $"PDF Display - {this.documentViewModel.CurrentPdfFile.Name} - Page {this.documentViewModel.CurrentPdfFile.CurrentPage}";
+                    $"PDF Display - {this.documentViewModel.Model.Name} - Page {this.documentViewModel.Model.CurrentPage}";
             }
         }
 
@@ -222,18 +222,19 @@ namespace PdfDisplay
 
             if (fileModel == null)
             {
-                fileModel = new FileModel { FullName = filePath };
+                fileModel = new DocumentModel { FullName = filePath };
                 fileModels.Add(fileModel);
             }
 
-            // CurrentPdfFile = new FileViewModel(fileModel) { IsLoading = true };
+            // CurrentPdfFile = new DocumentModel(fileModel) { IsLoading = true };
 
             // watcher.EnableRaisingEvents = false;
             // watcher.Path = CurrentPdfFile.Path;
             // watcher.Filter = CurrentPdfFile.Name;
             // watcher.EnableRaisingEvents = true;
-
             this.ActivateItem(this.documentViewModel);
+            this.documentViewModel.SetDocumentModel(fileModel);
+            this.NotifyOfPropertyChange(nameof(this.ApplicationTitle));
         }
 
         internal void Save()
@@ -252,7 +253,7 @@ namespace PdfDisplay
 
                 using (var file = new StreamWriter(Path.Combine(homePath, "PdfDisplayRescentFileProperties.xml")))
                 {
-                    var serializer = new XmlSerializer(typeof(List<FileModel>));
+                    var serializer = new XmlSerializer(typeof(List<DocumentModel>));
                     serializer.Serialize(file, fileModels);
                 }
             }
@@ -313,8 +314,8 @@ namespace PdfDisplay
             return Task.Run(
                 () =>
                 {
-                    this.documentViewModel.CurrentPdfFile = FileViewModel.Default;
                     this.ActivateItem(this.welcomeViewModel);
+                    this.documentViewModel.SetDocumentModel(DocumentModel.Default);
                 }
             );
         }

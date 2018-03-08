@@ -1,62 +1,83 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright>
+//     Copyright (c) AIS Automation Dresden GmbH. All rights reserved.
+// </copyright>
 
 namespace PdfDisplay
 {
+    using System;
+    using System.IO;
     using Caliburn.Micro;
-    class DocumentViewModel : Screen
+    using PdfDisplay.Communication;
+    using Telerik.Windows.Documents.Fixed;
+    using Telerik.Windows.Documents.Fixed.FormatProviders;
+
+    internal class DocumentViewModel : Screen
     {
         private readonly IEventAggregator eventAggreagator;
-        private int currentPage;
-        private FileViewModel currentPdfFile;
 
         public DocumentViewModel(IEventAggregator eventAggreagator)
         {
             this.eventAggreagator = eventAggreagator ?? throw new ArgumentNullException(nameof(eventAggreagator));
         }
 
-        public FileViewModel CurrentPdfFile
+        public DocumentModel Model { get; private set; }
+
+        public PdfDocumentSource DocumentSource
         {
-            get => currentPdfFile;
-
-            set
+            get
             {
-                if (value == null)
+                if (string.IsNullOrEmpty(this.Model.FullName))
                 {
-                    return;
+                    return null;
                 }
 
-                if (currentPdfFile != null)
+                var stream = new MemoryStream();
+
+                using (Stream input = File.OpenRead(this.Model.FullName))
                 {
-                    // currentPdfFile.PropertyChanged -= this.OnPdfFilePropertyChanged;
+                    input.CopyTo(stream);
                 }
-                currentPdfFile = value;
-                if (currentPdfFile != null)
-                {
-                    // currentPdfFile.PropertyChanged += this.OnPdfFilePropertyChanged;
-                }
-                NotifyOfPropertyChange();
-                // NotifyOfPropertyChange(() => ApplicationTitle);
+
+                return new PdfDocumentSource(stream, new FormatProviderSettings(ReadingMode.OnDemand));
             }
         }
 
         public int CurrentPage
         {
-            get => this.currentPage;
+            get => this.Model.CurrentPage;
 
             set
             {
-                if (value == this.currentPage)
+                if (value == this.Model.CurrentPage)
                 {
                     return;
                 }
 
-                this.currentPage = value;
+                this.Model.CurrentPage = value;
                 this.NotifyOfPropertyChange();
             }
+        }
+
+        public double ScaleFactor
+        {
+            get => this.Model.ScaleFactor;
+
+            set
+            {
+                if (value.Equals(this.Model.ScaleFactor))
+                {
+                    return;
+                }
+
+                this.Model.ScaleFactor = value;
+                this.NotifyOfPropertyChange();
+            }
+        }
+
+        public void SetDocumentModel(DocumentModel newModel)
+        {
+            this.Model = newModel;
+            this.NotifyOfPropertyChange(nameof(this.DocumentSource));
         }
 
         public void PageUp()
@@ -72,7 +93,22 @@ namespace PdfDisplay
         public void PageDown()
         {
             this.CurrentPage += 1;
+        }
 
+        public void ZoomIn()
+        {
+            if (this.ScaleFactor < 5)
+            {
+                this.ScaleFactor += 0.2;
+            }
+        }
+
+        public void ZoomOut()
+        {
+            if (this.ScaleFactor > 0.3)
+            {
+                this.ScaleFactor -= 0.2;
+            }
         }
 
         public void CloseDocument()

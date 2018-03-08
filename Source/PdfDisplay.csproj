@@ -97,14 +97,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="CloseDocumentMessage.cs" />
+    <Compile Include="Communication\CloseDocumentMessage.cs" />
     <Compile Include="DocumentHistoryViewModel.cs" />
+    <Compile Include="DocumentModel.cs" />
     <Compile Include="DocumentNotFoundView.xaml.cs">
       <DependentUpon>DocumentNotFoundView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DocumentNotFoundViewModel.cs" />
     <Compile Include="DocumentViewModel.cs" />
-    <Compile Include="OpenDocumentMessage.cs" />
+    <Compile Include="Communication\OpenDocumentMessage.cs" />
     <Compile Include="WelcomeViewModel.cs" />
     <Compile Include="RescentFileModel.cs" />
     <Compile Include="SettingBindingExtension.cs" />

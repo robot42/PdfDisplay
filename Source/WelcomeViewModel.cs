@@ -7,6 +7,7 @@ namespace PdfDisplay
     using System;
     using Caliburn.Micro;
     using Microsoft.Win32;
+    using PdfDisplay.Communication;
 
     public class WelcomeViewModel : Screen
     {

@@ -1,4 +1,4 @@
-﻿namespace PdfDisplay
+﻿namespace PdfDisplay.Communication
 {
     public class CloseDocumentMessage
     {

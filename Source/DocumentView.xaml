@@ -4,14 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
-             xmlns:fixed="clr-namespace:Telerik.Windows.Documents.Fixed;assembly=Telerik.Windows.Controls.FixedDocumentViewers"
              xmlns:pdfDisplay="clr-namespace:PdfDisplay"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance pdfDisplay:DocumentViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
-    <UserControl.Resources>
-        <fixed:PdfDocumentSourceValueConverter x:Key="PdfDocumentSourceValueConverter" />
-    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -19,7 +15,7 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Orientation="Vertical" Grid.Column="0" Background="#FF80397B">
-            <telerik:RadButton Background="#FFB250AB" Padding="10" BorderThickness="0" x:Name="CloseDocument" Click="OnFileSelection">
+            <telerik:RadButton Background="#FFB250AB" Padding="10" BorderThickness="0" x:Name="CloseDocument">
                 <Image Source="Images/Close.png" Stretch="None"/>
             </telerik:RadButton>
             <telerik:RadButton Background="Transparent" Padding="10" BorderThickness="0" x:Name="PageUp">
@@ -28,20 +24,18 @@
             <telerik:RadButton Background="Transparent" Padding="10" BorderThickness="0" x:Name="PageDown">
                 <Image Source="Images/ArrowDown.png" Stretch="None"/>
             </telerik:RadButton>
-            <telerik:RadButton Background="Transparent" Padding="10" BorderThickness="0" x:Name="ZoomIn" Click="OnZoomIn">
+            <telerik:RadButton Background="Transparent" Padding="10" BorderThickness="0" x:Name="ZoomIn">
                 <Image Source="Images/ZoomIn.png" Stretch="None"/>
             </telerik:RadButton>
-            <telerik:RadButton Background="Transparent" Padding="10" BorderThickness="0" x:Name="ZoomOut" Click="OnZoomOut">
+            <telerik:RadButton Background="Transparent" Padding="10" BorderThickness="0" x:Name="ZoomOut">
                 <Image Source="Images/ZoomOut.png" Stretch="None"/>
             </telerik:RadButton>
             <Rectangle Height="20"/>
         </StackPanel>
 
-        <telerik:RadPdfViewer x:Name="pdfViewer"
-                              CurrentPageNumber="{Binding CurrentPage}"
-                              DocumentChanged="OnDocumentChanged"
-                              CurrentPageChanged="OnCurrentDocumentPageChanged"
-                              ScaleFactorChanged="OnCurrentDocumentScaleFactorChanged"
+        <telerik:RadPdfViewer CurrentPageNumber="{Binding CurrentPage}"
+                              ScaleFactor="{Binding ScaleFactor}"
+                              DocumentSource="{Binding DocumentSource}"
                               Grid.Column="1"/>
     </Grid>
 </UserControl>
