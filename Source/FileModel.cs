@@ -9,20 +9,20 @@ namespace PdfDisplay
     /// <summary>
     ///     This model represents a single document.
     /// </summary>
-    public class DocumentModel
+    public class FileModel
     {
-        public DocumentModel()
+        public FileModel()
         {
             this.LastOpened = DateTime.Now;
         }
 
-        public static DocumentModel Default { get; } = new DocumentModel();
+        public static FileModel Default { get; } = new FileModel();
 
         public string FullName { get; set; }
 
-        public string Name => System.IO.Path.GetFileName(this.FullName);
-
         public string Path => System.IO.Path.GetDirectoryName(this.FullName);
+
+        public string Name => System.IO.Path.GetFileName(this.FullName);
 
         public int CurrentPage { get; set; }
 

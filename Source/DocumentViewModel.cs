@@ -20,7 +20,7 @@ namespace PdfDisplay
             this.eventAggreagator = eventAggreagator ?? throw new ArgumentNullException(nameof(eventAggreagator));
         }
 
-        public DocumentModel Model { get; private set; }
+        public FileModel Model { get; private set; }
 
         public PdfDocumentSource DocumentSource
         {
@@ -74,7 +74,7 @@ namespace PdfDisplay
             }
         }
 
-        public void SetDocumentModel(DocumentModel newModel)
+        public void SetDocumentModel(FileModel newModel)
         {
             this.Model = newModel;
             this.NotifyOfPropertyChange(nameof(this.DocumentSource));

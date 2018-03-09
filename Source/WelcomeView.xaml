@@ -5,18 +5,26 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="600">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="0.25*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="0.25*"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Row="1">
-            <TextBlock FontSize="20" Foreground="#FF7B7B7B" Text="Browse for a PDF file that you want to see."/>
-            <Rectangle Height="10"/>
-            <telerik:RadButton x:Name="OpenDocument" Content="Browse ..." Width="150" Height="32"
-                               HorizontalAlignment="Left" Background="#FF80397B"  Foreground="#FFF7F7F7"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1">
+            <TextBlock Style="{StaticResource Headline}" Text="PDF Display"/>
+            <TextBlock Style="{StaticResource SubHeadline}" Text="The lightweight viewer for your PDF files."/>
+            <Rectangle Height="60"/>
+            <telerik:RadButton x:Name="OpenDocument" Width="150" Height="50"
+                               HorizontalAlignment="Left" Background="#FF80397B"  Foreground="#FFF7F7F7">
+                <TextBlock Style="{StaticResource ButtonText}" Text="Open..."/>
+            </telerik:RadButton>
         </StackPanel>    
     </Grid>
 </UserControl>

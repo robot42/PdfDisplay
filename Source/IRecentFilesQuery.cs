@@ -4,11 +4,10 @@
 
 namespace PdfDisplay
 {
-    public partial class DocumentHistoryView
+    using System.Collections.Generic;
+
+    internal interface IRecentFilesQuery
     {
-        public DocumentHistoryView()
-        {
-            this.InitializeComponent();
-        }
+        IEnumerable<FileModel> Files { get; }
     }
 }

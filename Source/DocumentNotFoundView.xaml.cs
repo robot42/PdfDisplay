@@ -1,28 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿// <copyright>
+//     Copyright (c) AIS Automation Dresden GmbH. All rights reserved.
+// </copyright>
 
 namespace PdfDisplay
 {
-    /// <summary>
-    /// Interaction logic for DocumentNotFoundView.xaml
-    /// </summary>
-    public partial class DocumentNotFoundView : UserControl
+    public partial class DocumentNotFoundView
     {
         public DocumentNotFoundView()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

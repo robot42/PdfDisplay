@@ -1,11 +1,10 @@
-﻿namespace PdfDisplay
-{
-    using System.Windows.Controls;
+﻿// <copyright>
+//     Copyright (c) AIS Automation Dresden GmbH. All rights reserved.
+// </copyright>
 
-    /// <summary>
-    ///     Interaktionslogik für WelcomeView.xaml
-    /// </summary>
-    public partial class WelcomeView : UserControl
+namespace PdfDisplay
+{
+    public partial class WelcomeView
     {
         public WelcomeView()
         {

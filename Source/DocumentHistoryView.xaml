@@ -5,54 +5,43 @@
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="500">
+             d:DesignHeight="600" d:DesignWidth="600">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.25*"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="1.62*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.25*"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Row="1">
-            <TextBlock FontSize="20" Foreground="#FF7B7B7B" Text="Browse for a PDF file that you want to see."/>
-            <Rectangle Height="10"/>
-            <telerik:RadButton Click="OnBrowse" Content="Browse ..." Width="150" Height="32" Background="#FF80397B" Foreground="#FFF7F7F7" HorizontalAlignment="Left"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1">
+            <TextBlock Style="{StaticResource Headline}" Text="PDF Display"/>
+            <TextBlock Style="{StaticResource SubHeadline}" Text="The lightweight viewer for your PDF files."/>
+            <Rectangle Height="60"/>
+            <telerik:RadButton x:Name="OpenDocument" Width="150" Height="50" Background="#FF80397B" Foreground="#FFF7F7F7" HorizontalAlignment="Left">
+                <TextBlock Style="{StaticResource ButtonText}" Text="Open..."/>
+            </telerik:RadButton>
             <Rectangle Height="20"/>
-            <TextBlock FontSize="20" Foreground="#FF7B7B7B" Text="Or select one of the rescent files."/>
-            <Rectangle Height="10"/>
-            <telerik:RadListBox ItemsSource="{Binding RescentFiles, Mode=OneWay}"
-                                SelectedItem="{Binding SelectedRescentFile, Mode=TwoWay}"
-                                BorderThickness="0"
-                                MouseLeftButtonUp="OnSelectRescentFile"
-                                Margin="-16,0,0,0">
-                <telerik:RadListBox.ItemContainerStyle>
-                    <Style TargetType="{x:Type telerik:RadListBoxItem}">
-                        <Setter Property="LayoutTransform">
-                            <Setter.Value>
-                                <ScaleTransform x:Name="transform" />
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </telerik:RadListBox.ItemContainerStyle>
-                <telerik:RadListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Border Background="#FFF7F7F7" Padding="10,5,10,5" MaxWidth="550">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <Image Stretch="None" Source="Images/Pdf.png" Margin="0,0,5,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>
-                                <TextBlock Text="{Binding Name}" Foreground="#FF80397B" Grid.Column="1" Grid.Row="0" TextTrimming="CharacterEllipsis"/>
-                                <TextBlock Text="{Binding Path}" Foreground="DarkGray" Grid.Column="1" Grid.Row="1" TextTrimming="CharacterEllipsis"/>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </telerik:RadListBox.ItemTemplate>
-            </telerik:RadListBox>
         </StackPanel>
+
+        <telerik:RadListBox ItemsSource="{Binding RecentFiles, Mode=OneWay}"
+                            SelectedItem="{Binding SelectedRecentFile, Mode=TwoWay}"
+                            BorderThickness="0"
+                            Margin="0"
+                            Grid.Column="1"
+                            Grid.Row="2">
+            <telerik:RadListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical" Margin="0,2,0,2">
+                        <TextBlock Style="{StaticResource Text}" Text="{Binding Name}" TextTrimming="CharacterEllipsis"/>
+                        <TextBlock Style="{StaticResource SubText}" Text="{Binding Path}" TextTrimming="CharacterEllipsis"/>
+                    </StackPanel>
+                </DataTemplate>
+            </telerik:RadListBox.ItemTemplate>
+        </telerik:RadListBox>
     </Grid>
 </UserControl>

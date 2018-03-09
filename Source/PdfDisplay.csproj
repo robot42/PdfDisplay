@@ -98,16 +98,18 @@
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Communication\CloseDocumentMessage.cs" />
+    <Compile Include="DocumentHelper.cs" />
     <Compile Include="DocumentHistoryViewModel.cs" />
-    <Compile Include="DocumentModel.cs" />
+    <Compile Include="FileModel.cs" />
     <Compile Include="DocumentNotFoundView.xaml.cs">
       <DependentUpon>DocumentNotFoundView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DocumentNotFoundViewModel.cs" />
     <Compile Include="DocumentViewModel.cs" />
     <Compile Include="Communication\OpenDocumentMessage.cs" />
+    <Compile Include="IRecentFilesQuery.cs" />
+    <Compile Include="RecentFilesRepository.cs" />
     <Compile Include="WelcomeViewModel.cs" />
-    <Compile Include="RescentFileModel.cs" />
     <Compile Include="SettingBindingExtension.cs" />
     <Page Include="DocumentNotFoundView.xaml">
       <SubType>Designer</SubType>

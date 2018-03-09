@@ -8,9 +8,6 @@
 
     using Telerik.Windows.Controls;
 
-    /// <summary>
-    ///     Interaktionslogik für MainWindow.xaml
-    /// </summary>
     public partial class MainView
     {
         private MainViewModel vm;
@@ -33,7 +30,6 @@
 
         private void OnClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            this.vm.Save();
             Properties.Settings.Default.Save();
         }
 

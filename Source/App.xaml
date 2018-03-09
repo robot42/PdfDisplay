@@ -6,9 +6,29 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
-                    <pdfDisplay:Bootstrapper x:Key="bootstrapper" />
+                    <pdfDisplay:Bootstrapper x:Key="BootStrapper" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="Headline" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="#7B7B7B" />
+                <Setter Property="FontSize" Value="60" />
+            </Style>
+            <Style x:Key="SubHeadline" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="#7B7B7B" />
+                <Setter Property="FontSize" Value="20" />
+            </Style>
+            <Style x:Key="Text" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="#80397B" />
+                <Setter Property="FontSize" Value="20" />
+            </Style>
+            <Style x:Key="SubText" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="#7B7B7B" />
+                <Setter Property="FontSize" Value="12" />
+            </Style>
+            <Style x:Key="ButtonText" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="#F7F7F7" />
+                <Setter Property="FontSize" Value="20" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

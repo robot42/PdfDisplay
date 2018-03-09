@@ -6,7 +6,6 @@ namespace PdfDisplay
 {
     using System;
     using Caliburn.Micro;
-    using Microsoft.Win32;
     using PdfDisplay.Communication;
 
     public class WelcomeViewModel : Screen
@@ -20,20 +19,9 @@ namespace PdfDisplay
 
         public void OpenDocument()
         {
-            var dialog = new OpenFileDialog
+            if (DocumentHelper.TrySelectDocument(out string fileName))
             {
-                DefaultExt = ".pdf",
-                Filter = "PDF documents |*.pdf",
-                RestoreDirectory = true,
-                CheckFileExists = true,
-                CheckPathExists = true
-            };
-
-            var result = dialog.ShowDialog();
-
-            if (result.HasValue && result.Value)
-            {
-                this.eventAggregator.PublishOnBackgroundThread(new OpenDocumentMessage(dialog.FileName));
+                this.eventAggregator.PublishOnBackgroundThread(new OpenDocumentMessage(fileName));
             }
         }
     }
