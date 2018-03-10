@@ -9,13 +9,41 @@
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance pdfDisplay:DocumentViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style x:Key="ReloadNotification" TargetType="Border">
+            <Setter Property="Opacity" Value="0"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsReloaded}" Value="True">
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                             Storyboard.TargetProperty="Opacity"
+                             From="0" To="1"
+                             Duration="0:0:0.4" />
+                                <DoubleAnimation
+                             Storyboard.TargetProperty="Opacity"
+                             From="1" To="0"
+                             BeginTime="0:0:2"
+                             Duration="0:0:0.4" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.EnterActions>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Vertical" Grid.Column="0" Background="#FF80397B">
+        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Background="#FF80397B">
             <telerik:RadButton Background="#FFB250AB" Padding="10" BorderThickness="0" x:Name="CloseDocument">
                 <Image Source="Images/Close.png" Stretch="None"/>
             </telerik:RadButton>
@@ -38,6 +66,12 @@
                               CurrentPageNumber="{Binding CurrentPage, Mode=TwoWay}"
                               ScaleFactor="{Binding ScaleFactor, Mode=TwoWay}"
                               cal:Message.Attach="[Event DocumentChanged] = [Action DocumentChanged]"
-                              Grid.Column="1"/>
+                              Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"/>
+
+        <StackPanel Grid.Column="1" Grid.Row="1">
+            <Border Style="{StaticResource ReloadNotification}" CornerRadius="2" Background="#F7F7F7" BorderThickness="0" HorizontalAlignment="Left" Margin="20" Padding="10">
+                <TextBlock Style="{StaticResource Text}" Text="A new version of the document was loaded." />
+            </Border>
+        </StackPanel>
     </Grid>
 </UserControl>

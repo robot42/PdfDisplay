@@ -16,6 +16,7 @@ namespace PdfDisplay
         private readonly IEventAggregator eventAggregator;
         private readonly DocumentWatch watcher = new DocumentWatch();
         private bool isLoadingDocument;
+        private bool isReloaded;
 
         public DocumentViewModel(IEventAggregator eventAggregator)
         {
@@ -103,7 +104,9 @@ namespace PdfDisplay
 
         public void Reload()
         {
+            this.IsReloaded = true;
             this.NotifyOfPropertyChange(nameof(this.DocumentSource));
+            this.IsReloaded = false;
         }
 
         public void PageUp()
@@ -115,6 +118,21 @@ namespace PdfDisplay
 
             this.CurrentPage--;
             this.eventAggregator.PublishOnUIThread(new ScrollInDocumentMessage());
+        }
+
+        public bool IsReloaded
+        {
+            get
+            {
+                return this.isReloaded;
+            }
+            set
+            {
+                if (value == this.isReloaded) return;
+
+                this.isReloaded = value;
+                this.NotifyOfPropertyChange();
+            }
         }
 
         public void PageDown()
@@ -133,7 +151,7 @@ namespace PdfDisplay
 
         public void ZoomOut()
         {
-            if (this.ScaleFactor > 0.3)
+            if (this.ScaleFactor > 0.4)
             {
                 this.ScaleFactor -= 0.2;
             }
