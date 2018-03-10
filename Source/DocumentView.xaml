@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
              xmlns:pdfDisplay="clr-namespace:PdfDisplay"
+             xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance pdfDisplay:DocumentViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -33,9 +34,10 @@
             <Rectangle Height="20"/>
         </StackPanel>
 
-        <telerik:RadPdfViewer CurrentPageNumber="{Binding CurrentPage}"
-                              ScaleFactor="{Binding ScaleFactor}"
-                              DocumentSource="{Binding DocumentSource}"
+        <telerik:RadPdfViewer DocumentSource="{Binding DocumentSource}"
+                              CurrentPageNumber="{Binding CurrentPage, Mode=TwoWay}"
+                              ScaleFactor="{Binding ScaleFactor, Mode=TwoWay}"
+                              cal:Message.Attach="[Event DocumentChanged] = [Action DocumentChanged]"
                               Grid.Column="1"/>
     </Grid>
 </UserControl>

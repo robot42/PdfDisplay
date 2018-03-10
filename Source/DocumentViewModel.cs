@@ -14,6 +14,7 @@ namespace PdfDisplay
     internal class DocumentViewModel : Screen
     {
         private readonly IEventAggregator eventAggregator;
+        private bool isLoadingDocument;
 
         public DocumentViewModel(IEventAggregator eventAggregator)
         {
@@ -38,33 +39,35 @@ namespace PdfDisplay
                     input.CopyTo(stream);
                 }
 
+                this.isLoadingDocument = true;
                 return new PdfDocumentSource(stream, new FormatProviderSettings(ReadingMode.OnDemand));
             }
         }
 
         public int CurrentPage
         {
-            get => this.Model.CurrentPage;
+            get => this.isLoadingDocument ? 1 : this.Model.CurrentPage;
 
             set
             {
-                if (value == this.Model.CurrentPage)
+                if (this.isLoadingDocument || value == this.Model.CurrentPage)
                 {
                     return;
                 }
 
                 this.Model.CurrentPage = value;
                 this.NotifyOfPropertyChange();
+                this.eventAggregator.PublishOnUIThread(new ScrollInDocumentMessage());
             }
         }
 
         public double ScaleFactor
         {
-            get => this.Model.ScaleFactor;
+            get => this.isLoadingDocument ? 1 : this.Model.ScaleFactor;
 
             set
             {
-                if (value.Equals(this.Model.ScaleFactor))
+                if (this.isLoadingDocument || value.Equals(this.Model.ScaleFactor))
                 {
                     return;
                 }
@@ -74,9 +77,21 @@ namespace PdfDisplay
             }
         }
 
+        public void DocumentChanged()
+        {
+            if (this.isLoadingDocument == false)
+            {
+                return;
+            }
+
+            this.isLoadingDocument = false;
+            this.NotifyOfPropertyChange(nameof(this.CurrentPage));
+            this.NotifyOfPropertyChange(nameof(this.ScaleFactor));
+        }
+
         public void SetFileModel(FileModel newModel)
         {
-            this.Model = newModel;
+            this.Model = newModel ?? new FileModel();
             this.NotifyOfPropertyChange(nameof(this.DocumentSource));
         }
 
@@ -88,11 +103,13 @@ namespace PdfDisplay
             }
 
             this.CurrentPage--;
+            this.eventAggregator.PublishOnUIThread(new ScrollInDocumentMessage());
         }
 
         public void PageDown()
         {
-            this.CurrentPage += 1;
+            this.CurrentPage++;
+            this.eventAggregator.PublishOnUIThread(new ScrollInDocumentMessage());
         }
 
         public void ZoomIn()
@@ -113,6 +130,7 @@ namespace PdfDisplay
 
         public void CloseDocument()
         {
+            this.isLoadingDocument = false;
             this.eventAggregator.PublishOnBackgroundThread(new CloseDocumentMessage());
         }
     }

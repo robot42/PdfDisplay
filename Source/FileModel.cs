@@ -11,12 +11,15 @@ namespace PdfDisplay
     /// </summary>
     public class FileModel
     {
+        private int currentPage;
+        private double scaleFactor;
+
         public FileModel()
         {
+            this.currentPage = 1;
+            this.scaleFactor = 1.0;
             this.LastOpened = DateTime.Now;
         }
-
-        public static FileModel Default { get; } = new FileModel();
 
         public string FullName { get; set; }
 
@@ -24,9 +27,18 @@ namespace PdfDisplay
 
         public string Name => System.IO.Path.GetFileName(this.FullName);
 
-        public int CurrentPage { get; set; }
+        public int CurrentPage
+        {
+            get => this.currentPage;
 
-        public double ScaleFactor { get; set; }
+            set => this.currentPage = Math.Max(1, value);
+        }
+
+        public double ScaleFactor
+        {
+            get => this.scaleFactor;
+            set => this.scaleFactor = Math.Max(0.2, value);
+        }
 
         public DateTime LastOpened { get; set; }
     }

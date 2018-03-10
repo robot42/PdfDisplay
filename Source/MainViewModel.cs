@@ -14,7 +14,8 @@ namespace PdfDisplay
 
     public class MainViewModel : Conductor<Screen>.Collection.OneActive,
         IHandleWithTask<OpenDocumentMessage>,
-        IHandleWithTask<CloseDocumentMessage>
+        IHandleWithTask<CloseDocumentMessage>,
+        IHandleWithTask<ScrollInDocumentMessage>
     {
         private readonly IWindowManager windowManager;
         private readonly IEventAggregator eventAggregator;
@@ -91,7 +92,7 @@ namespace PdfDisplay
         {
             get
             {
-                if (this.documentViewModel == null || this.documentViewModel.Model != FileModel.Default)
+                if (this.documentViewModel == null || this.documentViewModel.Model == null)
                 {
                     return "PDF Display";
                 }
@@ -132,7 +133,7 @@ namespace PdfDisplay
                 () =>
                 {
                     this.ActivateItem(this.GetDocumentSelectionScreen());
-                    this.documentViewModel.SetFileModel(FileModel.Default);
+                    this.documentViewModel.SetFileModel(null);
                 }
             );
         }
@@ -157,6 +158,11 @@ namespace PdfDisplay
         private Screen GetDocumentSelectionScreen()
         {
             return this.filesRepository.Files.Any() ? (Screen)this.historyViewModel : this.welcomeViewModel;
+        }
+
+        public Task Handle(ScrollInDocumentMessage message)
+        {
+            return Task.Run(() => this.NotifyOfPropertyChange(nameof(this.ApplicationTitle)));
         }
     }
 }
