@@ -14,11 +14,16 @@ namespace PdfDisplay
     internal class DocumentViewModel : Screen
     {
         private readonly IEventAggregator eventAggregator;
+        private readonly DocumentWatch watcher = new DocumentWatch();
         private bool isLoadingDocument;
 
         public DocumentViewModel(IEventAggregator eventAggregator)
         {
             this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
+            this.watcher.ShouldReload += (sender, args) =>
+            {
+                this.Reload();
+            };
         }
 
         public FileModel Model { get; private set; }
@@ -92,6 +97,12 @@ namespace PdfDisplay
         public void SetFileModel(FileModel newModel)
         {
             this.Model = newModel ?? new FileModel();
+            this.watcher.MonitorFile(this.Model);
+            this.NotifyOfPropertyChange(nameof(this.DocumentSource));
+        }
+
+        public void Reload()
+        {
             this.NotifyOfPropertyChange(nameof(this.DocumentSource));
         }
 
@@ -131,6 +142,7 @@ namespace PdfDisplay
         public void CloseDocument()
         {
             this.isLoadingDocument = false;
+            this.watcher.StopMonitoring();
             this.eventAggregator.PublishOnBackgroundThread(new CloseDocumentMessage());
         }
     }

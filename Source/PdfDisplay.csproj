@@ -110,6 +110,7 @@
     <Compile Include="Communication\ScrollInDocumentMessage.cs" />
     <Compile Include="DocumentHelper.cs" />
     <Compile Include="DocumentHistoryViewModel.cs" />
+    <Compile Include="DocumentWatch.cs" />
     <Compile Include="FileModel.cs" />
     <Compile Include="DocumentNotFoundView.xaml.cs">
       <DependentUpon>DocumentNotFoundView.xaml</DependentUpon>

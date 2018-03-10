@@ -8,7 +8,6 @@ namespace PdfDisplay
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
-    using System.Windows.Threading;
     using Caliburn.Micro;
     using PdfDisplay.Communication;
 
@@ -19,8 +18,6 @@ namespace PdfDisplay
     {
         private readonly IWindowManager windowManager;
         private readonly IEventAggregator eventAggregator;
-        private readonly FileSystemWatcher watcher = new FileSystemWatcher();
-        private readonly DispatcherTimer reloadTimer = new DispatcherTimer();
         private readonly RecentFilesRepository filesRepository = new RecentFilesRepository();
         private readonly WelcomeViewModel welcomeViewModel;
         private readonly DocumentViewModel documentViewModel;
@@ -31,51 +28,6 @@ namespace PdfDisplay
         {
             this.windowManager = windowManager ?? throw new ArgumentNullException(nameof(windowManager));
             this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
-
-            this.watcher.NotifyFilter = NotifyFilters.LastWrite;
-            this.watcher.Changed += (s, e) =>
-            {
-                this.reloadTimer.Stop();
-                this.reloadTimer.Start();
-            };
-
-            reloadTimer.Interval = TimeSpan.FromSeconds(1);
-            reloadTimer.Tick += (s, e) =>
-            {
-                reloadTimer.Stop();
-                //if (CurrentPdfFile == FileModel.Default)
-                //{
-                //    return;
-                //}
-
-                //FileStream stream = null;
-
-                //try
-                //{
-                //    stream = (new FileInfo(CurrentPdfFile.FullName)).Open(FileMode.Open, FileAccess.Read, FileShare.None);
-                //}
-                //catch (IOException)
-                //{
-                //    //the file is unavailable because it is:
-                //    //still being written to
-                //    //or being processed by another thread
-                //    //or does not exist (has already been processed)
-                //    return;
-                //}
-                //finally
-                //{
-                //    stream?.Close();
-                //}
-
-                //System.Action a = () =>
-                //{
-                //    CurrentPdfFile.IsLoading = true;
-                //    NotifyOfPropertyChange(() => CurrentPdfFile);
-                //};
-
-                // Application.Current.Dispatcher.BeginInvoke(a);
-            };
-
             this.welcomeViewModel = new WelcomeViewModel(this.eventAggregator);
             this.documentViewModel = new DocumentViewModel(this.eventAggregator);
             this.historyViewModel = new DocumentHistoryViewModel(this.eventAggregator, this.filesRepository );
@@ -92,7 +44,7 @@ namespace PdfDisplay
         {
             get
             {
-                if (this.documentViewModel == null || this.documentViewModel.Model == null)
+                if (this.documentViewModel?.Model == null)
                 {
                     return "PDF Display";
                 }
@@ -113,10 +65,7 @@ namespace PdfDisplay
             }
 
             var model = this.filesRepository.GetOrAdd(filePath);
-            // watcher.EnableRaisingEvents = false;
-            // watcher.Path = CurrentPdfFile.Path;
-            // watcher.Filter = CurrentPdfFile.Name;
-            // watcher.EnableRaisingEvents = true;
+
             this.documentViewModel.SetFileModel(model);
             this.ActivateItem(this.documentViewModel);
             this.NotifyOfPropertyChange(nameof(this.ApplicationTitle));
