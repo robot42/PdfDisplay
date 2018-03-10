@@ -12,18 +12,28 @@ namespace PdfDisplay
 
     class DocumentHistoryViewModel : Screen
     {
-        private readonly IRecentFilesQuery recentFiles;
+        private readonly IRecentFilesQuery recentFilesQuery;
         private readonly IEventAggregator eventAggregator;
         private FileModel selectedRecentFile;
+        private ObservableCollection<FileModel> recentFiles;
 
         public DocumentHistoryViewModel(IEventAggregator eventAggregator, IRecentFilesQuery recentFiles)
         {
-            this.recentFiles = recentFiles ?? throw new ArgumentNullException(nameof(recentFiles));
+            this.recentFilesQuery = recentFiles ?? throw new ArgumentNullException(nameof(recentFiles));
             this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
             this.RecentFiles = new ObservableCollection<FileModel>();
         }
 
-        public ObservableCollection<FileModel> RecentFiles { get; private set; }
+        public ObservableCollection<FileModel> RecentFiles
+        {
+            get => this.recentFiles;
+
+            private set
+            {
+                this.recentFiles = value;
+                this.NotifyOfPropertyChange();
+            }
+        }
 
         public FileModel SelectedRecentFile
         {
@@ -57,7 +67,8 @@ namespace PdfDisplay
         protected override void OnActivate()
         {
             base.OnActivate();
-            this.RecentFiles = new ObservableCollection<FileModel>(this.recentFiles.Files.OrderBy(file => file.LastOpened));
+            this.SelectedRecentFile = null;
+            this.RecentFiles = new ObservableCollection<FileModel>(this.recentFilesQuery.Files.OrderByDescending(file => file.LastOpened));
         }
     }
 }

@@ -12,8 +12,6 @@
     {
         private MainViewModel vm;
 
-        // private string lastFileName;
-
         public MainView()
         {
             StyleManager.ApplicationTheme = new Windows8Theme();

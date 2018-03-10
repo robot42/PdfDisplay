@@ -50,25 +50,41 @@ namespace PdfDisplay
             }
         }
 
-        public void Add(FileModel model)
+        public FileModel GetOrAdd(string fileName)
         {
-            var existingModel = this.files.FirstOrDefault(m => m.FullName == model.FullName);
-            
+            var existingModel = this.files.FirstOrDefault(model => model.FullName == fileName);
+
             if (existingModel != null)
             {
-                this.files.Remove(existingModel);
+                existingModel.LastOpened = DateTime.Now;
+                return existingModel;
             }
 
-            this.files.Insert(0, model);
-            while (this.files.Count > 8)
+            var result = new FileModel {FullName = fileName};
+
+            this.files.Add(result);
+            this.RemoveOldestFiles();
+            return result;
+        }
+
+        private void RemoveOldestFiles()
+        {
+            if (this.files.Count <= 8)
             {
-                this.files.RemoveAt(this.files.Count - 1);
+                return;
+            }
+
+            var sortedFiles = this.files.OrderByDescending(file => file.LastOpened);
+
+            foreach (var fileModel in sortedFiles.Skip(8))
+            {
+                this.files.Remove(fileModel);
             }
         }
 
-        public void Remove(FileModel model)
+        public void Remove(string fileName)
         {
-            this.files.Remove(model);
+            this.files.RemoveAll(model => model.FullName == fileName);
         }
     }
 }

@@ -13,11 +13,11 @@ namespace PdfDisplay
 
     internal class DocumentViewModel : Screen
     {
-        private readonly IEventAggregator eventAggreagator;
+        private readonly IEventAggregator eventAggregator;
 
-        public DocumentViewModel(IEventAggregator eventAggreagator)
+        public DocumentViewModel(IEventAggregator eventAggregator)
         {
-            this.eventAggreagator = eventAggreagator ?? throw new ArgumentNullException(nameof(eventAggreagator));
+            this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
         }
 
         public FileModel Model { get; private set; }
@@ -74,7 +74,7 @@ namespace PdfDisplay
             }
         }
 
-        public void SetDocumentModel(FileModel newModel)
+        public void SetFileModel(FileModel newModel)
         {
             this.Model = newModel;
             this.NotifyOfPropertyChange(nameof(this.DocumentSource));
@@ -113,7 +113,7 @@ namespace PdfDisplay
 
         public void CloseDocument()
         {
-            this.eventAggreagator.PublishOnBackgroundThread(new CloseDocumentMessage());
+            this.eventAggregator.PublishOnBackgroundThread(new CloseDocumentMessage());
         }
     }
 }

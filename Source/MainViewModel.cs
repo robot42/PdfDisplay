@@ -8,7 +8,6 @@ namespace PdfDisplay
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
-    using System.Windows;
     using System.Windows.Threading;
     using Caliburn.Micro;
     using PdfDisplay.Communication;
@@ -17,22 +16,19 @@ namespace PdfDisplay
         IHandleWithTask<OpenDocumentMessage>,
         IHandleWithTask<CloseDocumentMessage>
     {
+        private readonly IWindowManager windowManager;
         private readonly IEventAggregator eventAggregator;
-
         private readonly FileSystemWatcher watcher = new FileSystemWatcher();
-
         private readonly DispatcherTimer reloadTimer = new DispatcherTimer();
-
         private readonly RecentFilesRepository filesRepository = new RecentFilesRepository();
-
         private readonly WelcomeViewModel welcomeViewModel;
-
         private readonly DocumentViewModel documentViewModel;
-
         private readonly DocumentHistoryViewModel historyViewModel;
+        private readonly DocumentNotFoundViewModel notFoundViewModel;
 
-        public MainViewModel(IEventAggregator eventAggregator)
+        public MainViewModel(IEventAggregator eventAggregator, IWindowManager windowManager)
         {
+            this.windowManager = windowManager ?? throw new ArgumentNullException(nameof(windowManager));
             this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
 
             this.watcher.NotifyFilter = NotifyFilters.LastWrite;
@@ -81,7 +77,8 @@ namespace PdfDisplay
 
             this.welcomeViewModel = new WelcomeViewModel(this.eventAggregator);
             this.documentViewModel = new DocumentViewModel(this.eventAggregator);
-            this.historyViewModel = new DocumentHistoryViewModel(this.eventAggregator, this.filesRepository);
+            this.historyViewModel = new DocumentHistoryViewModel(this.eventAggregator, this.filesRepository );
+            this.notFoundViewModel = new DocumentNotFoundViewModel(this.eventAggregator);
 
             this.Items.Add(this.welcomeViewModel);
             this.Items.Add(this.documentViewModel);
@@ -106,22 +103,20 @@ namespace PdfDisplay
 
         public void OpenFile(string filePath)
         {
-            if (!filePath.ToLower().EndsWith(".pdf") || !File.Exists(filePath))
+            if (filePath.ToLower().EndsWith(".pdf") == false || File.Exists(filePath) == false)
             {
-                MessageBox.Show(
-                    $"The file {filePath} is not valid or does not exist.",
-                    "Sorry...",
-                    MessageBoxButton.OK);
+                this.notFoundViewModel.MissingFile = new FileModel { FullName = filePath };
+                this.ActivateItem(this.notFoundViewModel);
+                this.filesRepository.Remove(filePath);
                 return;
             }
 
-            var model = new FileModel { FullName = filePath };
-            this.filesRepository.Add(model);
+            var model = this.filesRepository.GetOrAdd(filePath);
             // watcher.EnableRaisingEvents = false;
             // watcher.Path = CurrentPdfFile.Path;
             // watcher.Filter = CurrentPdfFile.Name;
             // watcher.EnableRaisingEvents = true;
-            this.documentViewModel.SetDocumentModel(model);
+            this.documentViewModel.SetFileModel(model);
             this.ActivateItem(this.documentViewModel);
             this.NotifyOfPropertyChange(nameof(this.ApplicationTitle));
         }
@@ -137,7 +132,7 @@ namespace PdfDisplay
                 () =>
                 {
                     this.ActivateItem(this.GetDocumentSelectionScreen());
-                    this.documentViewModel.SetDocumentModel(FileModel.Default);
+                    this.documentViewModel.SetFileModel(FileModel.Default);
                 }
             );
         }
@@ -155,12 +150,13 @@ namespace PdfDisplay
             if (close)
             {
                 this.filesRepository.Save();
+                this.eventAggregator.Unsubscribe(this);
             }
         }
 
         private Screen GetDocumentSelectionScreen()
         {
-            return this.filesRepository.Files.Any() ? (Screen)this.historyViewModel : (Screen)this.welcomeViewModel;
+            return this.filesRepository.Files.Any() ? (Screen)this.historyViewModel : this.welcomeViewModel;
         }
     }
 }
