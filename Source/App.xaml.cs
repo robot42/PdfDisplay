@@ -1,19 +1,17 @@
-﻿using System.Windows;
+﻿// <copyright>
+//     Copyright (c) AIS Automation Dresden GmbH. All rights reserved.
+// </copyright>
 
 namespace PdfDisplay
 {
     using System.Windows.Media;
-
     using Telerik.Windows.Controls;
 
-    /// <summary>
-    /// Interaktionslogik für "App.xaml"
-    /// </summary>
-    public partial class App : Application
+    public partial class App
     {
         public App()
         {
-            Windows8Palette.Palette.AccentColor = (Color)ColorConverter.ConvertFromString("#FF80397B");
+            Windows8Palette.Palette.AccentColor = (Color)ColorConverter.ConvertFromString("#BF963E");
         }
     }
 }

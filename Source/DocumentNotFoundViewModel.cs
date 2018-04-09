@@ -8,13 +8,13 @@ namespace PdfDisplay
     using Caliburn.Micro;
     using PdfDisplay.Communication;
 
-    class DocumentNotFoundViewModel : Screen
+    internal class DocumentNotFoundViewModel : Screen
     {
         private readonly IEventAggregator eventAggregator;
 
         public DocumentNotFoundViewModel(IEventAggregator eventAggregator)
         {
-            this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
+            this.eventAggregator = eventAggregator;
         }
 
         public FileModel MissingFile { get; set; }

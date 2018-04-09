@@ -4,7 +4,6 @@
 
 namespace PdfDisplay
 {
-    using System;
     using System.IO;
     using Caliburn.Micro;
     using PdfDisplay.Communication;
@@ -20,7 +19,7 @@ namespace PdfDisplay
 
         public DocumentViewModel(IEventAggregator eventAggregator)
         {
-            this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
+            this.eventAggregator = eventAggregator;
             this.watcher.ShouldReload += (sender, args) =>
             {
                 this.Reload();
@@ -122,13 +121,13 @@ namespace PdfDisplay
 
         public bool IsReloaded
         {
-            get
-            {
-                return this.isReloaded;
-            }
+            get => this.isReloaded;
             set
             {
-                if (value == this.isReloaded) return;
+                if (value == this.isReloaded)
+                {
+                    return;
+                }
 
                 this.isReloaded = value;
                 this.NotifyOfPropertyChange();

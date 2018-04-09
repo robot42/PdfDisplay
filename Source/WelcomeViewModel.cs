@@ -4,17 +4,16 @@
 
 namespace PdfDisplay
 {
-    using System;
     using Caliburn.Micro;
     using PdfDisplay.Communication;
 
-    public class WelcomeViewModel : Screen
+    internal class WelcomeViewModel : Screen
     {
         private readonly IEventAggregator eventAggregator;
 
         public WelcomeViewModel(IEventAggregator eventAggregator)
         {
-            this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
+            this.eventAggregator = eventAggregator;
         }
 
         public void OpenDocument()

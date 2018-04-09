@@ -13,25 +13,32 @@ namespace PdfDisplay
     using Caliburn.Micro;
     using PdfDisplay.Communication;
 
-    public class MainViewModel : Conductor<Screen>.Collection.OneActive,
+    internal class MainViewModel : Conductor<Screen>.Collection.OneActive,
         IHandleWithTask<OpenDocumentMessage>,
         IHandleWithTask<CloseDocumentMessage>,
         IHandleWithTask<ScrollInDocumentMessage>
     {
         private readonly IEventAggregator eventAggregator;
-        private readonly RecentFilesRepository filesRepository = new RecentFilesRepository();
+        private readonly RecentFilesRepository filesRepository;
         private readonly WelcomeViewModel welcomeViewModel;
         private readonly DocumentViewModel documentViewModel;
         private readonly DocumentHistoryViewModel historyViewModel;
         private readonly DocumentNotFoundViewModel notFoundViewModel;
 
-        public MainViewModel(IEventAggregator eventAggregator)
+        public MainViewModel(
+            WelcomeViewModel welcomeViewModel,
+            DocumentViewModel documentViewModel,
+            DocumentNotFoundViewModel notFoundViewModel,
+            DocumentHistoryViewModel historyViewModel,
+            RecentFilesRepository repository,
+            IEventAggregator eventAggregator)
         {
-            this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
-            this.welcomeViewModel = new WelcomeViewModel(this.eventAggregator);
-            this.documentViewModel = new DocumentViewModel(this.eventAggregator);
-            this.historyViewModel = new DocumentHistoryViewModel(this.eventAggregator, this.filesRepository);
-            this.notFoundViewModel = new DocumentNotFoundViewModel(this.eventAggregator);
+            this.eventAggregator = eventAggregator;
+            this.welcomeViewModel = welcomeViewModel;
+            this.documentViewModel = documentViewModel;
+            this.historyViewModel = historyViewModel;
+            this.notFoundViewModel = notFoundViewModel;
+            this.filesRepository = repository;
 
             this.Items.Add(this.welcomeViewModel);
             this.Items.Add(this.documentViewModel);
@@ -44,7 +51,7 @@ namespace PdfDisplay
         {
             get
             {
-                if (this.documentViewModel?.Model == null)
+                if (string.IsNullOrEmpty(this.documentViewModel?.Model?.Name))
                 {
                     return "PDF Display";
                 }

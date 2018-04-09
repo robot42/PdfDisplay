@@ -1,25 +1,29 @@
-﻿using System.Windows.Data;
-using PdfDisplay.Properties;
+﻿// <copyright>
+//     Copyright (c) AIS Automation Dresden GmbH. All rights reserved.
+// </copyright>
 
 namespace PdfDisplay
 {
-    public class SettingBindingExtension : Binding
+    using System.Windows.Data;
+    using PdfDisplay.Properties;
+
+    internal class SettingBindingExtension : Binding
     {
         public SettingBindingExtension()
         {
-            Initialize();
+            this.Initialize();
         }
 
         public SettingBindingExtension(string path)
             : base(path)
         {
-            Initialize();
+            this.Initialize();
         }
 
         private void Initialize()
         {
-            Source = Settings.Default;
-            Mode = BindingMode.TwoWay;
+            this.Source = Settings.Default;
+            this.Mode = BindingMode.TwoWay;
         }
     }
 }

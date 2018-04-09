@@ -43,8 +43,14 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Background="#FF80397B">
-            <telerik:RadButton Background="#FFB250AB" Padding="10" BorderThickness="0" x:Name="CloseDocument">
+        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2">
+            <StackPanel.Background>
+                <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
+                    <GradientStop Color="#686868" Offset="0"/>
+                    <GradientStop Color="#303030" Offset="1"/>
+                </LinearGradientBrush>
+            </StackPanel.Background>
+            <telerik:RadButton Background="#BF963E" Padding="10" BorderThickness="0" x:Name="CloseDocument">
                 <Image Source="Images/Close.png" Stretch="None"/>
             </telerik:RadButton>
             <telerik:RadButton Background="Transparent" Padding="10" BorderThickness="0" x:Name="PageUp">
@@ -69,7 +75,7 @@
                               Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"/>
 
         <StackPanel Grid.Column="1" Grid.Row="1">
-            <Border Style="{StaticResource ReloadNotification}" CornerRadius="2" Background="#F7F7F7" BorderThickness="0" HorizontalAlignment="Left" Margin="20" Padding="10">
+            <Border Style="{StaticResource ReloadNotification}" CornerRadius="2" Background="White" BorderThickness="0" HorizontalAlignment="Left" Margin="20" Padding="10">
                 <TextBlock Style="{StaticResource Text}" Text="A new version of the document was loaded." />
             </Border>
         </StackPanel>

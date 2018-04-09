@@ -11,28 +11,28 @@
             </ResourceDictionary.MergedDictionaries>
             <Style x:Key="Headline" TargetType="TextBlock">
                 <Setter Property="Foreground" Value="#7B7B7B" />
-                <Setter Property="FontSize" Value="60" />
+                <Setter Property="FontSize" Value="47" />
             </Style>
             <Style x:Key="SubHeadline" TargetType="TextBlock">
                 <Setter Property="Foreground" Value="#7B7B7B" />
-                <Setter Property="FontSize" Value="20" />
+                <Setter Property="FontSize" Value="14" />
             </Style>
             <Style x:Key="Text" TargetType="TextBlock">
-                <Setter Property="Foreground" Value="#80397B" />
-                <Setter Property="FontSize" Value="20" />
+                <Setter Property="Foreground" Value="#BF963E" />
+                <Setter Property="FontSize" Value="14" />
             </Style>
             <Style x:Key="EmphasizedText" TargetType="Run">
-                <Setter Property="Foreground" Value="#80397B" />
-                <Setter Property="FontSize" Value="19" />
+                <Setter Property="Foreground" Value="#BF963E" />
+                <Setter Property="FontSize" Value="13" />
                 <Setter Property="FontWeight" Value="700" />
             </Style>
             <Style x:Key="SubText" TargetType="TextBlock">
                 <Setter Property="Foreground" Value="#7B7B7B" />
-                <Setter Property="FontSize" Value="12" />
+                <Setter Property="FontSize" Value="14" />
             </Style>
             <Style x:Key="ButtonText" TargetType="TextBlock">
                 <Setter Property="Foreground" Value="#F7F7F7" />
-                <Setter Property="FontSize" Value="20" />
+                <Setter Property="FontSize" Value="14" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>

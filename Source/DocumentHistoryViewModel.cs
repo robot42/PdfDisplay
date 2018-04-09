@@ -4,7 +4,6 @@
 
 namespace PdfDisplay
 {
-    using System;
     using System.Collections.ObjectModel;
     using System.Linq;
     using Caliburn.Micro;
@@ -19,8 +18,8 @@ namespace PdfDisplay
 
         public DocumentHistoryViewModel(IEventAggregator eventAggregator, IRecentFilesQuery recentFiles)
         {
-            this.recentFilesQuery = recentFiles ?? throw new ArgumentNullException(nameof(recentFiles));
-            this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
+            this.recentFilesQuery = recentFiles;
+            this.eventAggregator = eventAggregator;
             this.RecentFiles = new ObservableCollection<FileModel>();
         }
 

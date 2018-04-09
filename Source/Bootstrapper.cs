@@ -20,8 +20,16 @@ namespace PdfDisplay
 
         protected override void Configure()
         {
+            var repository = new RecentFilesRepository();
+
             this.container.Singleton<IEventAggregator, EventAggregator>();
             this.container.Singleton<IWindowManager, WindowManager>();
+            this.container.RegisterInstance(typeof(IRecentFilesQuery), string.Empty, repository);
+            this.container.RegisterInstance(typeof(RecentFilesRepository), string.Empty, repository);
+            this.container.Singleton<WelcomeViewModel, WelcomeViewModel>();
+            this.container.Singleton<DocumentViewModel, DocumentViewModel>();
+            this.container.Singleton<DocumentNotFoundViewModel, DocumentNotFoundViewModel>();
+            this.container.Singleton<DocumentHistoryViewModel, DocumentHistoryViewModel>();
             this.container.Singleton<MainViewModel, MainViewModel>();
         }
 
