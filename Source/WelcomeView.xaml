@@ -8,47 +8,38 @@
              d:DesignHeight="600" d:DesignWidth="600">
     <Grid>
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1.618*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="4*" />
                 <ColumnDefinition Width="1.5*" />
             </Grid.ColumnDefinitions>
-            <Border Grid.Row="0" Grid.Column="0" Background="#f7f7f7" />
-            <Border Grid.Row="1" Grid.Column="0" Background="White" />
-            <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" >
-                <Border.Background>
-                    <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
-                        <GradientStop Color="#686868" Offset="0"/>
-                        <GradientStop Color="#303030" Offset="1"/>
-                    </LinearGradientBrush>
-                </Border.Background>
-            </Border>
-        </Grid>
+            <Border Grid.Column="0" Background="{Binding Source={StaticResource TertiaryColor}}" />
+            <Border Grid.Column="1" Background="{Binding Source={StaticResource PrimaryColor}}" />
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="3.5*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="2*" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top">
-            <TextBlock Style="{StaticResource Headline}" Text="PDF Display"/>
-            <TextBlock Style="{StaticResource SubHeadline}" Text="The lightweight viewer for your PDF files."/>
-            </StackPanel>
-            <telerik:RadButton x:Name="OpenDocument" Width="150" Height="50" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom"
-                               HorizontalAlignment="Left" Background="#BF963E"  Foreground="White">
-                <TextBlock Style="{StaticResource ButtonText}" Text="Open..."/>
-            </telerik:RadButton>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3.5*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top">
+                    <TextBlock Style="{StaticResource Headline}" Text="PDF Display"/>
+                    <TextBlock Style="{StaticResource SubHeadline}" Text="The lightweight viewer for your PDF files."/>
+                </StackPanel>
+                <telerik:RadButton x:Name="OpenDocument" Width="150" Height="50"
+                                   Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom"
+                                   HorizontalAlignment="Left"
+                                   Background="{Binding Source={StaticResource SecondaryColor}}"
+                                   Foreground="{Binding Source={StaticResource PrimaryTextColor}}">
+                    <TextBlock Style="{StaticResource ButtonText}" Text="Open..."/>
+                </telerik:RadButton>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

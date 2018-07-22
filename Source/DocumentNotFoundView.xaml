@@ -6,7 +6,7 @@
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
-    <Grid Background="White">
+    <Grid Background="{Binding Source={StaticResource TertiaryColor}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
@@ -15,14 +15,14 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="0">
-            <StackPanel.Background>
-                <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
-                    <GradientStop Color="#686868" Offset="0"/>
-                    <GradientStop Color="#303030" Offset="1"/>
-                </LinearGradientBrush>
-            </StackPanel.Background>
-            <telerik:RadButton Background="#BF963E" Padding="10" BorderThickness="0" x:Name="Close">
+        <StackPanel Orientation="Vertical" 
+                    Background="{Binding Source={StaticResource PrimaryColor}}" 
+                    Grid.Column="0" 
+                    Grid.Row="0">
+            <telerik:RadButton Background="{Binding Source={StaticResource SecondaryColor}}"
+                               Padding="10"
+                               BorderThickness="0"
+                               x:Name="Close">
                 <Image Source="Images/Close.png" Stretch="None"/>
             </telerik:RadButton>
         </StackPanel>
@@ -33,10 +33,14 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="1.618*" />
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Width="450" >
+            <StackPanel Orientation="Vertical" 
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center" 
+                        Grid.Row="1" 
+                        Width="450" >
             <TextBlock Style="{StaticResource Headline}" Text="Sorry..."/>
             <Rectangle Height="10"/>
-            <TextBlock Style="{StaticResource Text}" TextWrapping="Wrap">
+                <TextBlock Style="{StaticResource SubHeadline}" TextWrapping="Wrap">
                 <TextBlock.Inlines>
                     <Run Text="The file " />
                     <Run Style="{StaticResource EmphasizedText}" Text="{Binding MissingFile.Name, Mode=OneWay}" />

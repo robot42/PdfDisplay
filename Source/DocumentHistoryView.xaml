@@ -5,68 +5,73 @@
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="600">
+             d:DesignHeight="600" d:DesignWidth="800">
     <Grid>
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1.618*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="1.618*" />
             </Grid.ColumnDefinitions>
-            <Border Grid.Row="0" Grid.Column="0" Background="#f7f7f7" />
-            <Border Grid.Row="1" Grid.Column="0" Background="White" />
-            <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" >
-                <Border.Background>
-                    <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
-                        <GradientStop Color="#686868" Offset="0"/>
-                        <GradientStop Color="#303030" Offset="1"/>
-                    </LinearGradientBrush>
-                </Border.Background>
-            </Border>
-        </Grid>
-
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="1.618*"/>
-            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="2*" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="3.5*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Margin="50,0">
-                <TextBlock Style="{StaticResource Headline}" Text="PDF Display"/>
-                <TextBlock Style="{StaticResource SubHeadline}" Text="The lightweight viewer for your PDF files."/>
-            </StackPanel>
-            <telerik:RadButton x:Name="OpenDocument" Width="150" Height="50" Grid.Column="0" Grid.Row="3" VerticalAlignment="Bottom"
-                               HorizontalAlignment="Left" Background="#BF963E"  Foreground="White" Margin="50,0">
-                <TextBlock Style="{StaticResource ButtonText}" Text="Open..."/>
-            </telerik:RadButton>
-        <telerik:RadListBox ItemsSource="{Binding RecentFiles, Mode=OneWay}"
-                            SelectedItem="{Binding SelectedRecentFile, Mode=TwoWay}"
-                            BorderThickness="1"
-                                BorderBrush="#f7f7f7"
-                            Margin="50, 0"
-                                Padding="20"
-                            Grid.Column="1"
-                            Grid.Row="1" Grid.RowSpan="3">
-                <telerik:RadListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Style="{StaticResource Text}" Text="{Binding Name}" TextTrimming="CharacterEllipsis"/>
-                        <TextBlock Style="{StaticResource SubText}" Text="{Binding Path}" TextTrimming="CharacterEllipsis"/>
-                    </StackPanel>
-                </DataTemplate>
-            </telerik:RadListBox.ItemTemplate>
-        </telerik:RadListBox>
+            <Border Grid.Column="0" Grid.RowSpan="3" 
+                    Background="{Binding Source={StaticResource TertiaryColor}}" />
+            <Border Grid.Column="1" Grid.RowSpan="3"
+                    Background="{Binding Source={StaticResource PrimaryColor}}" />
+            <Grid Grid.Column="0" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3.5*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top">
+                    <TextBlock Style="{StaticResource Headline}" Text="PDF Display"/>
+                    <TextBlock Style="{StaticResource SubHeadline}" Text="The lightweight viewer for your PDF files."/>
+                </StackPanel>
+                <telerik:RadButton x:Name="OpenDocument" Width="150" Height="50"
+                                   Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom"
+                                   HorizontalAlignment="Left"
+                                   Background="{Binding Source={StaticResource SecondaryColor}}"
+                                   Foreground="{Binding Source={StaticResource PrimaryTextColor}}">
+                    <TextBlock Style="{StaticResource ButtonText}" Text="Open..."/>
+                </telerik:RadButton>
+            </Grid>
 
-            
+            <Grid Grid.Column="1" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3.5*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <telerik:RadListBox ItemsSource="{Binding RecentFiles, Mode=OneWay}"
+                                    SelectedItem="{Binding SelectedRecentFile, Mode=TwoWay}"
+                                    BorderThickness="0"
+                                    Background="{Binding Source={StaticResource PrimaryColor}}"
+                                    Grid.Column="1"
+                                    Grid.Row="1">
+                    <telerik:RadListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Style="{StaticResource Text}" Text="{Binding Name}" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Style="{StaticResource SubText}" Text="{Binding Path}" TextTrimming="CharacterEllipsis"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </telerik:RadListBox.ItemTemplate>
+                </telerik:RadListBox>
+            </Grid>
         </Grid>
+
     </Grid>
 </UserControl>

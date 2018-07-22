@@ -9,29 +9,43 @@
                     <pdfDisplay:Bootstrapper x:Key="BootStrapper" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
+            
+            <SolidColorBrush x:Key="PrimaryColor">#303030</SolidColorBrush>
+            <SolidColorBrush x:Key="SecondaryColor">#FFCC00</SolidColorBrush>
+            <SolidColorBrush x:Key="TertiaryColor">#FFFFFF</SolidColorBrush>
+            <SolidColorBrush x:Key="PrimaryTextColor">#303030</SolidColorBrush>
+            <SolidColorBrush x:Key="SecondaryTextColor">#FFCC00</SolidColorBrush>
+            <SolidColorBrush x:Key="TertiaryTextColor">#686868</SolidColorBrush>
+
             <Style x:Key="Headline" TargetType="TextBlock">
-                <Setter Property="Foreground" Value="#7B7B7B" />
+                <Setter Property="Foreground"
+                        Value="{Binding Source={StaticResource PrimaryTextColor}}" />
                 <Setter Property="FontSize" Value="47" />
             </Style>
             <Style x:Key="SubHeadline" TargetType="TextBlock">
-                <Setter Property="Foreground" Value="#7B7B7B" />
+                <Setter Property="Foreground"
+                        Value="{Binding Source={StaticResource PrimaryTextColor}}" />
                 <Setter Property="FontSize" Value="14" />
             </Style>
             <Style x:Key="Text" TargetType="TextBlock">
-                <Setter Property="Foreground" Value="#BF963E" />
+                <Setter Property="Foreground" 
+                        Value="{Binding Source={StaticResource SecondaryTextColor}}" />
                 <Setter Property="FontSize" Value="14" />
             </Style>
             <Style x:Key="EmphasizedText" TargetType="Run">
-                <Setter Property="Foreground" Value="#BF963E" />
+                <Setter Property="Foreground" 
+                        Value="{Binding Source={StaticResource PrimaryTextColor}}" />
                 <Setter Property="FontSize" Value="13" />
                 <Setter Property="FontWeight" Value="700" />
             </Style>
             <Style x:Key="SubText" TargetType="TextBlock">
-                <Setter Property="Foreground" Value="#7B7B7B" />
+                <Setter Property="Foreground" 
+                        Value="{Binding Source={StaticResource TertiaryTextColor}}" />
                 <Setter Property="FontSize" Value="14" />
             </Style>
             <Style x:Key="ButtonText" TargetType="TextBlock">
-                <Setter Property="Foreground" Value="#F7F7F7" />
+                <Setter Property="Foreground"
+                        Value="{Binding Source={StaticResource PrimaryTextColor}}" />
                 <Setter Property="FontSize" Value="14" />
             </Style>
         </ResourceDictionary>
