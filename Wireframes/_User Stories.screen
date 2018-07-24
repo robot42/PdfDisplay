@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
-  <widgets xsi:type="model:Note" id="1" x="24" y="32" width="889" height="279" text="USER STORIES&#xA;&#xA;- (01) Der Nutzer kann eine PDF-Datei öffnen, um sich deren Inhalt anzuzeigen.&#xA;- (02) Der Nutzer kann in der Anzeige blättern, um den gesamten Inhalt zu sehen.&#xA;- (03) Der Nutzer kann die Anzeige vergrößern, um die Schrift besser zu lesen.&#xA;- (04) Der Nutzer kann die Anzeige verkleinern, um sich einen Überblick über eine Seite zu verschaffen.&#xA;- (05) Dem Programm kann eine Datei übergeben werden, um diese sofort anzuzeigen.&#xA;- (06) Das Programm zeigt nach Start die letzten 5 Dateien an, um die Dateiauswahl zu beschleunigen.&#xA;- (07) Der Nutzer kann eine beliebige PDF-Datei auf der Festplatte auswählen und anzeigen.&#xA;- (08) Es kann nur eine Datei zu einem Zeitpukt geöffnet sein um die Anzeige übersichtlich zu halten.&#xA;- (09) Der Nuzer kann die gerade angezeigte Datei automatisch aktualisieren lassen, wenn sie sich auf der Festplatte ändert.&#xA;- (10) Der Nutzer kann die gerade angezeigte Datei schließen.&#xA;- (11) Wenn eine Datei erneut geöffnet wird springt die Anzeige zur zuletzt angezeigten Seite um dem Nutzer Arbeit bei der Navigation zu sparen.&#xA;" measuredWidth="889" measuredHeight="279" textAlignment="Left">
-    <font/>
-  </widgets>
-  <hRuler/>
-  <vRuler/>
-  <font size="12px"/>
-</model:Screen>

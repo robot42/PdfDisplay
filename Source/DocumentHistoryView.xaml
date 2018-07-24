@@ -17,9 +17,9 @@
                 <RowDefinition Height="3.5*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Border Grid.Column="0" Grid.RowSpan="3" 
+            <Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" 
                     Background="{Binding Source={StaticResource TertiaryColor}}" />
-            <Border Grid.Column="1" Grid.RowSpan="3"
+            <Border Grid.Column="1" Grid.Row="0" Grid.RowSpan="3"
                     Background="{Binding Source={StaticResource PrimaryColor}}" />
             <Grid Grid.Column="0" Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -41,7 +41,7 @@
                     <TextBlock Style="{StaticResource SubHeadline}" Text="The lightweight viewer for your PDF files."/>
                 </StackPanel>
                 <telerik:RadButton x:Name="OpenDocument" Width="150" Height="50"
-                                   Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom"
+                                   Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom"
                                    HorizontalAlignment="Left"
                                    Background="{Binding Source={StaticResource SecondaryColor}}"
                                    Foreground="{Binding Source={StaticResource PrimaryTextColor}}">
@@ -65,8 +65,9 @@
                                     Padding="0,0,10,0"
                                     BorderBrush="{Binding Source={StaticResource SecondaryColor}}"
                                     Background="{Binding Source={StaticResource PrimaryColor}}"
-                                    Grid.Column="1"
-                                    Grid.Row="1">
+                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                    ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                    Grid.Column="1">
                     <telerik:RadListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Vertical">
