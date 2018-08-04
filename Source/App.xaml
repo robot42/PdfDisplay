@@ -11,21 +11,23 @@
             </ResourceDictionary.MergedDictionaries>
             
             <SolidColorBrush x:Key="PrimaryColor">#303030</SolidColorBrush>
-            <SolidColorBrush x:Key="SecondaryColor">#FFCC00</SolidColorBrush>
-            <SolidColorBrush x:Key="TertiaryColor">#FFFFFF</SolidColorBrush>
+            <SolidColorBrush x:Key="SecondaryColor">#FDD444</SolidColorBrush>
+            <SolidColorBrush x:Key="TertiaryColor">#F7F1DB</SolidColorBrush>
             <SolidColorBrush x:Key="PrimaryTextColor">#303030</SolidColorBrush>
-            <SolidColorBrush x:Key="SecondaryTextColor">#FFCC00</SolidColorBrush>
-            <SolidColorBrush x:Key="TertiaryTextColor">#686868</SolidColorBrush>
+            <SolidColorBrush x:Key="SecondaryTextColor">#FDD444</SolidColorBrush>
+            <SolidColorBrush x:Key="TertiaryTextColor">#CCC7B5</SolidColorBrush>
 
             <Style x:Key="Headline" TargetType="TextBlock">
                 <Setter Property="Foreground"
                         Value="{Binding Source={StaticResource PrimaryTextColor}}" />
                 <Setter Property="FontSize" Value="47" />
+                <Setter Property="FontFamily" Value="Bahnschrift" />
             </Style>
             <Style x:Key="SubHeadline" TargetType="TextBlock">
                 <Setter Property="Foreground"
                         Value="{Binding Source={StaticResource PrimaryTextColor}}" />
                 <Setter Property="FontSize" Value="14" />
+                <Setter Property="FontFamily" Value="Bahnschrift" />
             </Style>
             <Style x:Key="Text" TargetType="TextBlock">
                 <Setter Property="Foreground" 
@@ -47,6 +49,7 @@
                 <Setter Property="Foreground"
                         Value="{Binding Source={StaticResource PrimaryTextColor}}" />
                 <Setter Property="FontSize" Value="14" />
+                <Setter Property="FontWeight" Value="700"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>

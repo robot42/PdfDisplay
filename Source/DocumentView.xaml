@@ -65,6 +65,7 @@
         </StackPanel>
 
         <telerik:RadPdfViewer DocumentSource="{Binding DocumentSource}"
+                              Background="{Binding Source={StaticResource TertiaryColor}}"
                               CurrentPageNumber="{Binding CurrentPage, Mode=TwoWay}"
                               ScaleFactor="{Binding ScaleFactor, Mode=TwoWay}"
                               cal:Message.Attach="[Event DocumentChanged] = [Action DocumentChanged]"
